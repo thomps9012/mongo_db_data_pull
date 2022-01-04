@@ -3,9 +3,9 @@ import Head from "next/head";
 import { Props } from "./[client_id]";
 
 export function ClientDetail({ serializedRecord }: Props) {
-    
+
     const recordId = JSON.stringify(serializedRecord._id)
-    
+
     let completeEntry = async () => {
         const res = await fetch('/api/completeNOMS', {
             method: 'PUT',
@@ -17,7 +17,7 @@ export function ClientDetail({ serializedRecord }: Props) {
             alert('Your database connection was unsuccessful, try reloading the page or reaching out to sthompson@norainc.org for support')
         }
     }
-    
+
     return (
         <div className={styles.container}>
             <Head>
@@ -27,19 +27,19 @@ export function ClientDetail({ serializedRecord }: Props) {
             </Head>
             <main className={styles.main}>
                 <h3>
-                    NOMS Details for:
+                    NOMS for:
                 </h3>
-                <h2>
+                <h3>
                     {serializedRecord.client_information.client_info.name}
-                </h2>
-                <h2>
-                    {serializedRecord.client_information.interview_type}
-                </h2>
-                <pre>
+                </h3>
+                <h3>
+                    {serializedRecord.client_information.interview_type.toString().toUpperCase()}
+                </h3>
+                <pre className={styles.code}>
                     {JSON.stringify(serializedRecord, null, '\t')}
                 </pre>
                 <h3>For BMI Stats, Services Received, and Admit Date, Check Dr. Cloud</h3>
-            <button onClick={() => completeEntry()}>Entered NOMS</button>
+                <button className={styles.button} onClick={() => completeEntry()}><h3>Entered NOMS</h3></button>
             </main>
         </div>
     );
