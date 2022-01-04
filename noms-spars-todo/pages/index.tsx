@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Props } from './Props'
 import { GetServerSideProps } from 'next'
+import React from 'react'
 
 function Home({ serializedRecords }: Props) {
   const [records] = useState(serializedRecords)
@@ -25,15 +26,16 @@ function Home({ serializedRecords }: Props) {
             <>
               <h1>Below are clients that need to be entered into SPARS</h1>
               {records.map(record => {
-                <div className={styles.card}>
+                return (
                   <Link href='/detail/:client_id' as={`/detail/${record._id}`} passHref>
-                    {console.log(record._id)}
-                    <p>{record._id}</p>
-                    <h1>{record.client_information.client_info.name}</h1>
-                    <h3>{record.client_information.interview_type}</h3>
-                    <h1>{record.client_information.interviewDate}</h1>
+                    <div className={styles.card}>
+                      {console.log(record._id)}
+                      <h1>{record.client_information.client_info.name}</h1>
+                      <h2>{record.client_information.interview_type}</h2>
+                      <h3>{record.client_information.interviewDate}</h3>
+                    </div>
                   </Link>
-                </div>
+                )
               })}
             </>
             :
@@ -45,14 +47,22 @@ function Home({ serializedRecords }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { client } = await connectToDatabase()
-  const projection = { _id: 1, client_information: 1 }
-  const unenteredRecords = await client.db('spars_cmhs').collection('clients').find({
-    spars_entry: false
-  }).project(projection).toArray()
-  const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
-  return {
-    props: { serializedRecords }
+  try {
+    const { client } = await connectToDatabase()
+    const projection = { _id: 1, client_information: 1 }
+    const unenteredRecords = await client.db('spars_cmhs').collection('clients').find({
+      spars_entry: false
+    }).project(projection).toArray()
+    const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
+    return {
+      props: { serializedRecords: serializedRecords }
+    }
+  } catch (error) {
+    return {
+      props: {
+        error: error
+      }
+    }
   }
 }
 
