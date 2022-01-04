@@ -15,7 +15,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         _id: new ObjectId(client_id)
     })
     let serializedRecord = JSON.parse(JSON.stringify(clientRecordDetail))
-    console.log(serializedRecord)
     return {
         props: { serializedRecord }
     }
