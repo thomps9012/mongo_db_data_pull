@@ -26,7 +26,7 @@ function Home({ serializedRecords }: Props) {
               <h1>Below are clients that need to be entered into SPARS</h1>
               {records.map(record => {
                 <div className={styles.card}>
-                  <Link href='/detail/:client_id' as={`/detail/${record._id}`}>
+                  <Link href='/detail/:client_id' as={`/detail/${record._id}`} passHref>
                     {console.log(record._id)}
                     <p>{record._id}</p>
                     <h1>{record.client_information.client_info.name}</h1>

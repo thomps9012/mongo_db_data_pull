@@ -246,7 +246,7 @@ export function ClientDetail({ serializedRecord }: Props) {
 
                     </div>
                 </div>
-                <h3>For BMI Stats, Services Received, and Admit Date, Check Client's Dr. Cloud Records</h3>
+                <h3>For BMI Stats, Services Received, and Admit Date, Check Dr. Cloud</h3>
             </main>
         </div>
     );
