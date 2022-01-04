@@ -4,18 +4,7 @@ import { connectToDatabase } from '../util/mongodb'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Props } from './Props'
-
-export async function getServerSideProps() {
-  const { client } = await connectToDatabase()
-  const projection = { _id: 1, client_information: 1 }
-  const unenteredRecords = await client.db('spars_cmhs').collection('clients').find({
-    spars_entry: false
-  }).project(projection).toArray()
-  const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
-  return {
-    props: { serializedRecords }
-  }
-}
+import { GetServerSideProps } from 'next'
 
 function Home({ serializedRecords }: Props) {
   const [records] = useState(serializedRecords)
@@ -31,26 +20,40 @@ function Home({ serializedRecords }: Props) {
         <h1 className={styles.title}>
           Welcome to Your NOMS SPARS Todo
         </h1>
-        {records.length > 0 ?
-          <div className={styles.grid}>
-            <h1>Below are clients that need to be entered into SPARS</h1>
-            <p>{records[0]._id}</p>
-            {records.map(record => {
-              { console.log(record)} 
-              <Link href='/detail/:client_id' as={`/detail/${record._id}`}>
+        <div className={styles.grid}>
+          {records.length > 0 ?
+            <>
+              <h1>Below are clients that need to be entered into SPARS</h1>
+              {records.map(record => {
                 <div className={styles.card}>
-                  {/* <h1>{record.client_information.client_info.name}</h1> */}
-                  {/* <h3>{record.client_information.interview_type}</h3> */}
-                  {/* <h1>{record.client_information.interviewDate}</h1> */}
+                  <Link href='/detail/:client_id' as={`/detail/${record._id}`}>
+                    {console.log(record._id)}
+                    <p>{record._id}</p>
+                    <h1>{record.client_information.client_info.name}</h1>
+                    <h3>{record.client_information.interview_type}</h3>
+                    <h1>{record.client_information.interviewDate}</h1>
+                  </Link>
                 </div>
-              </Link>
-            })}
-          </div>
-          :
-          <h1>You are all caught up on your SPARS Data Entry</h1>}
+              })}
+            </>
+            :
+            <h1>You are all caught up on your SPARS Data Entry</h1>}
+        </div>
       </main>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { client } = await connectToDatabase()
+  const projection = { _id: 1, client_information: 1 }
+  const unenteredRecords = await client.db('spars_cmhs').collection('clients').find({
+    spars_entry: false
+  }).project(projection).toArray()
+  const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
+  return {
+    props: { serializedRecords }
+  }
 }
 
 export default Home
