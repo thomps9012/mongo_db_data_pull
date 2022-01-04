@@ -35,10 +35,12 @@ export function ClientDetail({ serializedRecord }: Props) {
                 <h3>
                     {serializedRecord.client_information.interview_type.toString().toUpperCase()}
                 </h3>
+                <div className={styles.grid}>
                 <pre className={styles.code}>
                     {JSON.stringify(serializedRecord, null, '\t')}
                 </pre>
                 <h3>For BMI Stats, Services Received, and Admit Date, Check Dr. Cloud</h3>
+                </div>
                 <button className={styles.button} onClick={() => completeEntry()}><h3>Entered NOMS</h3></button>
             </main>
         </div>
