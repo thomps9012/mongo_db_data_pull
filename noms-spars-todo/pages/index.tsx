@@ -33,7 +33,6 @@ function Home({ serializedRecords }: Props) {
                 return (
                   <Link href='/detail/:client_id' as={`/detail/${record._id}`} passHref>
                     <div className={styles.card}>
-                      {console.log(record._id)}
                       <h1>{record.client_information.client_info.name}</h1>
                       <h2>{record.client_information.interview_type.toUpperCase()}</h2>
                       <h3>{formattedDate}</h3>
