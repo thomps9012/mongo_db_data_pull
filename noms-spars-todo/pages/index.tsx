@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css'
 import { connectToDatabase } from '../util/mongodb'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Props } from './Props'
+import { Props } from '../util/Props'
 import { GetServerSideProps } from 'next'
 import React from 'react'
 
