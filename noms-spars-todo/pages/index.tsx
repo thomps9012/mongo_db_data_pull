@@ -32,7 +32,7 @@ function Home({ serializedRecords }: Props) {
                 let formattedDate = `${month}/${day}/${year}`;
                 return (
                   <Link key={JSON.stringify(record._id)} href='/detail/:client_id' as={`/detail/${record._id}`} passHref>
-                    <div key={JSON.stringify(record._id)} className={styles.card}>
+                    <div className={styles.card}>
                       <h1>{record.client_information.client_info.name}</h1>
                       <h2>{record.client_information.interview_type.toUpperCase()}</h2>
                       <h3>{formattedDate}</h3>
