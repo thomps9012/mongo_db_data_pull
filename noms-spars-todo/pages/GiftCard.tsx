@@ -32,10 +32,10 @@ function GiftCard({ serializedRecords }: Props) {
                         let formattedDate = `${month}/${day}/${year}`;
                         return (
                             <Link key={JSON.stringify(record._id)} href='/carddetail/:client_id' as={`/carddetail/${record._id}`} passHref>
-                              <div key={JSON.stringify(record._id)} className={styles.card}>
-                                <h1 key={JSON.stringify(record._id)}>{record.client_information.client_info.name}</h1>
-                                <h2 key={JSON.stringify(record._id)}>{record.client_information.interview_type.toUpperCase()}</h2>
-                                <h3 key={JSON.stringify(record._id)}>{formattedDate}</h3>
+                              <div className={styles.card}>
+                                <h1>{record.client_information.client_info.name}</h1>
+                                <h2>{record.client_information.interview_type.toUpperCase()}</h2>
+                                <h3>{formattedDate}</h3>
                               </div>
                             </Link>
                           )

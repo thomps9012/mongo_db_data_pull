@@ -11,17 +11,19 @@ export type Props = {
 }
 
 function ClientCardDetail({ serializedRecord }: Props) {
-    const recordId = JSON.stringify(serializedRecord._id)
+    const recordId = serializedRecord._id
     const [card_type, setCardType] = useState('')
     const [card_amt, setCardAmt] = useState(0.0)
     const [client, setClient] = useState(false)
     const [nora, setNora] = useState(false)
+    const body = JSON.stringify({ recordId, card_type, card_amt, nora, client })
     let enterCard = async () => {
         const res = await fetch('/api/receiveCard', {
             method: 'PUT',
-            body: JSON.stringify({ recordId, card_type, card_amt, nora, client })
+            body: body
         }); if (res.ok) {
-            window.location.replace('/GiftCard')
+            // window.location.replace('/GiftCard')
+            console.log(res)
         }
         else {
             alert('Your database connection was unsuccessful, try reloading the page or reaching out to sthompson@norainc.org for support')
