@@ -114,3 +114,20 @@ export const clientRecordInterface = {
         physically_hurt_in_past_month: String || null
     }
 }
+
+export const clientCardInterface = {
+    _id: String || null,
+    client_information: {
+        interviewDate: String || null,
+        interview_type: String || null,
+        client_info: {
+            name: String || null,
+            emailAddress: String || null,
+            phoneNumber: String || null,
+            address: String || null
+        }
+    },
+    NORA_acknowledged: Boolean || null,
+    client_acknowledged: Boolean || null,
+    gift_card_received: Boolean || null
+}
