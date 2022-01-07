@@ -19,7 +19,7 @@ function Home({ serializedRecords }: Props) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to Your NOMS SPARS Todo
+         NOMS SPARS Todo
         </h1>
         <div className={styles.grid}>
           {records.length > 0 ?
@@ -44,6 +44,12 @@ function Home({ serializedRecords }: Props) {
             :
             <h1>You are all caught up on your SPARS Data Entry</h1>}
         </div>
+      <Link href='/GiftCard'>
+        <a><h4>
+          Take me over to gift card records instead
+          </h4>
+          </a>
+      </Link>
       </main>
     </div>
   )

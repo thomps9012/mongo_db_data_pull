@@ -22,7 +22,7 @@ function ClientCardDetail({ serializedRecord }: Props) {
             method: 'PUT',
             body: body
         }); if (res.ok) {
-            // window.location.replace('/GiftCard')
+            window.location.replace('/GiftCard')
             console.log(res)
         }
         else {

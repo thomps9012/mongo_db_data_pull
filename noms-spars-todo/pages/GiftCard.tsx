@@ -19,12 +19,12 @@ function GiftCard({ serializedRecords }: Props) {
 
             <main className={styles.main}>
                 <h1 className={styles.title}>
-                    Client Gift Card Incentive Records
+                    Gift Card Todo
                 </h1>
                 <div className={styles.grid}>
                     {cardRecords.length > 0 ?
                     <>
-                    <h1>Clients below have yet to receive gift card incentives for participating in NOMS</h1>
+                    <h1>Clients below need to receive gift card incentives for NOMS participation</h1>
                     {cardRecords.map(record => {
                         let year = record.client_information.interviewDate.slice(0,4);
                         let month = record.client_information.interviewDate.slice(5,7)
@@ -44,6 +44,12 @@ function GiftCard({ serializedRecords }: Props) {
                     :
                     <h1>All clients who have completed NOMS have received gift card incentives</h1>}
                 </div>
+                <Link href='/'>
+        <a><h4>
+          Take me over to SPARS records instead
+          </h4>
+          </a>
+      </Link>
             </main>
         </div>
     )
