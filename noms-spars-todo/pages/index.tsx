@@ -64,7 +64,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       spars_entry: false
     }).project(projection).toArray()
     const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
-    console.log(serializedRecords)
     return {
       props: { serializedRecords: serializedRecords }
     }

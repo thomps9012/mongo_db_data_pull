@@ -23,7 +23,6 @@ function ClientCardDetail({ serializedRecord }: Props) {
             body: body
         }); if (res.ok) {
             window.location.replace('/GiftCard')
-            console.log(res)
         }
         else {
             alert('Your database connection was unsuccessful, try reloading the page or reaching out to sthompson@norainc.org for support')
