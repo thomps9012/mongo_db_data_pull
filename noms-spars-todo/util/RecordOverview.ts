@@ -1,8 +1,10 @@
 export type RecordOverview = {
   _id: String;
-  client_information: {
+  interview_info: {
     interviewDate: String;
     interview_type: String;
+  },
+  client_information: {
     client_info: {
       name: String;
       email_address: String;

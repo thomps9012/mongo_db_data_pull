@@ -1,25 +1,35 @@
 export const clientRecordInterface = {
     _id: String || null,
-    client_information: {
+    interview_info: {
         interviewDate: String || null,
         interview_type: String || null,
+    },
+    client_information: {
         client_info: {
-            name: String || null,
-            emailAddress: String || null,
-            phoneNumber: String || null,
-            address: String || null
+            client_first_name: String || null,
+            client_last_name: String || null,
+            client_email_address: String || null,
+            client_phone_number: String || null,
+            client_street: String || null,
+            client_city: String || null,
+            client_state: String || null,
+            client_zip: String || null
         },
         emergency_contact: {
-            name: String || null,
-            emailAddress: String || null,
-            phoneNumber: String || null,
-            address: String || null
+            contact_first_name: String || null,
+            contact_last_name: String || null,
+            contact_email_address: String || null,
+            contact_phone_number: String || null,
+            contact_street: String || null,
+            contact_city: String || null,
+            contact_state: String || null,
+            contact_zip: String || null
         }
     },
-    crime: {
+    crime_data: {
         arrest_count: String || null
     },
-    demographic: {
+    demographic_data: {
         gender: String || null,
         race: String || null,
         date_of_birth: String || null,
@@ -39,7 +49,7 @@ export const clientRecordInterface = {
         sedative_use: String || null,
         hallucinogen_use: String || null,
         street_opioids_use: String || null,
-        other_drug_name: String || null,
+        other_drug: String || null,
         other_drug_use: String || null
     },
     education_employment: {
@@ -50,6 +60,11 @@ export const clientRecordInterface = {
         paid_at_min_wage: String || null,
         paid_direct_wages: String || null,
         could_anyone_apply: String || null
+    },
+    family_living_conditions: {
+        housing: String || null,
+        space_satisfaction: String || null,
+        pregnant: String || null
     },
     functioning1: {
         overall_health: String || null,
@@ -74,28 +89,28 @@ export const clientRecordInterface = {
     },
     functioning3: {
         enough_energy_for_life: String || null,
-        qualityOfLife: String || null,
+        quality_of_life: String || null,
         ability_for_daily_living: String || null,
         health_satisfaction: String || null,
         personal_satisfaction: String || null,
         relationship_satisfaction: String || null
     },
     housing_stability: {
-        homeless_nights: String || null,
-        nights_in_hospital: String || null,
-        nights_in_detox: String || null,
+        homeless_nights: Number || null,
+        nights_in_hospital: Number || null,
+        nights_in_detox: Number || null,
         nights_in_prison: String || null,
-        total_insecure_housing_nights: String || null,
-        erVists: String || null
+        total_insecure_housing_nights: Number || null,
+        ER_Visits: Number || null
     },
-    military: {
-        served_in_military: String || null,
-        military_branchs_served: Array,
-        activeDuty: String || null,
-        current_branch_served: Array,
-        deployed_to_combat: String || null,
+    military_data: {
+        served_in_military: Boolean || String || null,
+        branches_served: Array,
+        active_duty: Boolean || String || null,
+        current_branch: String || null,
+        deployed_to_combat: Boolean || String || null,
         combat_zones_served: Array,
-        family_members_served: String || null
+        family_members_served: Boolean || String || null
     },
     social_connectedness: {
         happy_with_friendships: String || null,
@@ -105,21 +120,23 @@ export const clientRecordInterface = {
         supportive_family_friends: String || null,
         generally_accomplish_goals: String || null
     },
-    trauma: {
-        experienced_trauma: String || null,
-        nightmares_about_it: String || null,
-        avoid_reminder_situations: String || null,
-        constantly_onguard: String || null,
-        felt_numb_detached: String || null,
+    trauma_data: {
+        experienced_trauma: Boolean || String || null,
+        nightmares: Boolean || String || null,
+        avoid_reminder_situations: Boolean || String || null,
+        constantly_onguard: Boolean || String || null,
+        felt_numb_detached: Boolean || String || null,
         physically_hurt_in_past_month: String || null
     }
 }
 
 export const clientCardInterface = {
     _id: String || null,
-    client_information: {
+    interview_info: {
         interviewDate: String || null,
         interview_type: String || null,
+    },
+    client_information: {
         client_info: {
             name: String || null,
             emailAddress: String || null,

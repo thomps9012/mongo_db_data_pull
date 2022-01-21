@@ -47,7 +47,7 @@ function ClientCardDetail({ serializedRecord }: Props) {
                 {serializedRecord.client_information.client_info.name}
                 </h2>
                 <h3>
-                {serializedRecord.client_information.interview_type.toString().toUpperCase()}
+                {serializedRecord.interview_info.interview_type.toString().toUpperCase()}
                 </h3>
                 </div>
                     <div className={styles.form}>

@@ -41,7 +41,7 @@ function ClientDetail({ serializedRecord }: Props) {
                     {serializedRecord.client_information.client_info.name}
                 </h2>
                 <h2>
-                    {serializedRecord.client_information.interview_type.toString().toUpperCase()}
+                    {serializedRecord.interview_info.interview_type.toString().toUpperCase()}
                 </h2>
                 <div className={styles.grid}>
                 <pre className={styles.code}>
