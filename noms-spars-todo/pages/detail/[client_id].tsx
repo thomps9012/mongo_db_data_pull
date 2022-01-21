@@ -57,7 +57,7 @@ function ClientDetail({ serializedRecord }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     let client_id = JSON.stringify(params?.client_id);
     const { client } = await connectToDatabase();
-    const clientRecordDetail = await client.db('spars_cmhs').collection('modified_clients').findOne({
+    const clientRecordDetail = await client.db('spars_cmhs').collection('clients').findOne({
         _id: new ObjectId(JSON.parse(client_id))
     })
     let serializedRecord = JSON.parse(JSON.stringify(clientRecordDetail))

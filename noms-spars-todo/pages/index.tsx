@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const { client } = await connectToDatabase()
     const projection = { _id: 1, client_information: 1, interview_info: 1 }
-    const unenteredRecords = await client.db('spars_cmhs').collection('modified_clients').find({
+    const unenteredRecords = await client.db('spars_cmhs').collection('clients').find({
       spars_entry: false
     }).project(projection).toArray()
     const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
