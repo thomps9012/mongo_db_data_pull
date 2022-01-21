@@ -11,7 +11,6 @@ export type Props = {
 }
 
 function ClientDetail({ serializedRecord }: Props) {
-
     const recordId = JSON.stringify(serializedRecord._id)
 
     let completeEntry = async () => {
@@ -34,20 +33,20 @@ function ClientDetail({ serializedRecord }: Props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={styles.main}>
-                <h3>
-                    NOMS for:
-                </h3>
-                <h2>
-                    {serializedRecord.client_information.client_info.name}
-                </h2>
+                <h1>
+                    {serializedRecord.client_information.client_info.client_first_name}
+                </h1>
+                <h1>
+                    {serializedRecord.client_information.client_info.client_last_name}
+                </h1>
                 <h2>
                     {serializedRecord.interview_info.interview_type.toString().toUpperCase()}
                 </h2>
                 <div className={styles.grid}>
-                <pre className={styles.code}>
-                    {JSON.stringify(serializedRecord, null, '\t')}
-                </pre>
-                <h3>For BMI Stats, Services Received, and Admit Date, Check Dr. Cloud</h3>
+                    <pre className={styles.code}>
+                        {JSON.stringify(serializedRecord, null, '\t')}
+                    </pre>
+                    <h3>For BMI Stats, Services Received, and Admit Date, Check Dr. Cloud</h3>
                 </div>
                 <button className={styles.button} onClick={() => completeEntry()}><h3>NOMS Entered</h3></button>
             </main>
@@ -58,7 +57,7 @@ function ClientDetail({ serializedRecord }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     let client_id = JSON.stringify(params?.client_id);
     const { client } = await connectToDatabase();
-    const clientRecordDetail = await client.db('spars_cmhs').collection('clients').findOne({
+    const clientRecordDetail = await client.db('spars_cmhs').collection('modified_clients').findOne({
         _id: new ObjectId(JSON.parse(client_id))
     })
     let serializedRecord = JSON.parse(JSON.stringify(clientRecordDetail))
