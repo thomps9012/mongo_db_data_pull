@@ -26,15 +26,16 @@ function GiftCard({ serializedRecords }: Props) {
                     <>
                     <h1>Clients below need to receive gift card incentives for NOMS participation</h1>
                     {cardRecords.map(record => {
-                        let year = record.client_information.interviewDate.slice(0,4);
-                        let month = record.client_information.interviewDate.slice(5,7)
-                        let day = record.client_information.interviewDate.slice(8,10)
+                        let year = record.interview_info.interviewDate.slice(0,4);
+                        let month = record.interview_info.interviewDate.slice(5,7)
+                        let day = record.interview_info.interviewDate.slice(8,10)
                         let formattedDate = `${month}/${day}/${year}`;
                         return (
                             <Link key={JSON.stringify(record._id)} href='/carddetail/:client_id' as={`/carddetail/${record._id}`} passHref>
                               <div className={styles.card}>
-                                <h1>{record.client_information.client_info.name}</h1>
-                                <h2>{record.client_information.interview_type.toUpperCase()}</h2>
+                                <h2>{record.client_information.client_info.client_first_name}</h2>
+                                <h2>{record.client_information.client_info.client_last_name}</h2>
+                                <h3>{record.interview_info.interview_type.toUpperCase()}</h3>
                                 <h3>{formattedDate}</h3>
                               </div>
                             </Link>
@@ -58,8 +59,8 @@ function GiftCard({ serializedRecords }: Props) {
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const { client } = await connectToDatabase();
-        const projection = {_id: 1, client_information: 1}
-        const unreceivedCards = await client.db('spars_cmhs').collection('clients').find({
+        const projection = {_id: 1, client_information: 1, interview_info: 1}
+        const unreceivedCards = await client.db('spars_cmhs').collection('modified_clients').find({
             gift_card_received: false
         }).project(projection).toArray()
         const serializedRecords = JSON.parse(JSON.stringify(unreceivedCards))

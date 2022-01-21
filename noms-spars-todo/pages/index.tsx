@@ -19,23 +19,24 @@ function Home({ serializedRecords }: Props) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-         NOMS SPARS Todo
+          NOMS SPARS Todo
         </h1>
         <div className={styles.grid}>
           {records.length > 0 ?
             <>
               <h1>Clients below need to be entered into SPARS</h1>
               {records.map(record => {
-                let year = record.client_information.interviewDate.slice(0,4);
-                let month = record.client_information.interviewDate.slice(5,7)
-                let day = record.client_information.interviewDate.slice(8,10)
+                let year = record.interview_info.interviewDate.slice(0, 4);
+                let month = record.interview_info.interviewDate.slice(5, 7)
+                let day = record.interview_info.interviewDate.slice(8, 10)
                 let formattedDate = `${month}/${day}/${year}`;
                 return (
                   <Link key={JSON.stringify(record._id)} href='/detail/:client_id' as={`/detail/${record._id}`} passHref>
-                    <div key={JSON.stringify(record._id)} className={styles.card}>
-                      <h1 key={JSON.stringify(record._id)}>{record.client_information.client_info.name}</h1>
-                      <h2 key={JSON.stringify(record._id)}>{record.client_information.interview_type.toUpperCase()}</h2>
-                      <h3 key={JSON.stringify(record._id)}>{formattedDate}</h3>
+                    <div className={styles.card}>
+                      <h2>{record.client_information.client_info.client_first_name}</h2>
+                      <h2>{record.client_information.client_info.client_last_name}</h2>
+                      <h3>{record.interview_info.interview_type.toUpperCase()}</h3>
+                      <h3>{formattedDate}</h3>
                     </div>
                   </Link>
                 )
@@ -44,12 +45,12 @@ function Home({ serializedRecords }: Props) {
             :
             <h1>You are all caught up on your SPARS Data Entry</h1>}
         </div>
-      <Link href='/GiftCard'>
-        <a><h4>
-          Take me over to gift card records instead
+        <Link href='/GiftCard'>
+          <a><h4>
+            Take me over to gift card records instead
           </h4>
           </a>
-      </Link>
+        </Link>
       </main>
     </div>
   )
@@ -58,11 +59,12 @@ function Home({ serializedRecords }: Props) {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const { client } = await connectToDatabase()
-    const projection = { _id: 1, client_information: 1 }
-    const unenteredRecords = await client.db('spars_cmhs').collection('clients').find({
+    const projection = { _id: 1, client_information: 1, interview_info: 1 }
+    const unenteredRecords = await client.db('spars_cmhs').collection('modified_clients').find({
       spars_entry: false
     }).project(projection).toArray()
     const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
+    console.log(serializedRecords)
     return {
       props: { serializedRecords: serializedRecords }
     }
