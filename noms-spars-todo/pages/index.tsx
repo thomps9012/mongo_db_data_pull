@@ -26,16 +26,18 @@ function Home({ serializedRecords }: Props) {
             <>
               <h1>Clients below need to be entered into SPARS</h1>
               {records.map(record => {
-                let year = record.interview_info.interviewDate.slice(0, 4);
-                let month = record.interview_info.interviewDate.slice(5, 7)
-                let day = record.interview_info.interviewDate.slice(8, 10)
+                const { interviewDate, interview_type} = record.interview_info;
+                const { client_first_name, client_last_name} = record.client_information.client_info;
+                let year = interviewDate.slice(0, 4);
+                let month = interviewDate.slice(5, 7)
+                let day = interviewDate.slice(8, 10)
                 let formattedDate = `${month}/${day}/${year}`;
                 return (
                   <Link key={JSON.stringify(record._id)} href='/detail/:client_id' as={`/detail/${record._id}`} passHref>
                     <div className={styles.card}>
-                      <h2>{record.client_information.client_info.client_first_name}</h2>
-                      <h2>{record.client_information.client_info.client_last_name}</h2>
-                      <h3>{record.interview_info.interview_type.toUpperCase()}</h3>
+                      <h2>{client_first_name}</h2>
+                      <h2>{client_last_name}</h2>
+                      <h3>{interview_type.toUpperCase()}</h3>
                       <h3>{formattedDate}</h3>
                     </div>
                   </Link>

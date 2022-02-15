@@ -24,7 +24,8 @@ function ClientDetail({ serializedRecord }: Props) {
             alert('Your database connection was unsuccessful, try reloading the page or reaching out to sthompson@norainc.org for support')
         }
     }
-
+    const {client_first_name, client_last_name} = serializedRecord.client_information.client_info;
+    const {interview_type} = serializedRecord.interview_info;
     return (
         <div className={styles.container}>
             <Head>
@@ -34,13 +35,13 @@ function ClientDetail({ serializedRecord }: Props) {
             </Head>
             <main className={styles.main}>
                 <h1>
-                    {serializedRecord.client_information.client_info.client_first_name}
+                    {client_first_name}
                 </h1>
                 <h1>
-                    {serializedRecord.client_information.client_info.client_last_name}
+                    {client_last_name}
                 </h1>
                 <h2>
-                    {serializedRecord.interview_info.interview_type.toString().toUpperCase()}
+                    {interview_type.toString().toUpperCase()}
                 </h2>
                 <div className={styles.grid}>
                     <pre className={styles.code}>

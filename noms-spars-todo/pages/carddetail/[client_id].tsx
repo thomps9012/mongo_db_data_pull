@@ -28,6 +28,8 @@ function ClientCardDetail({ serializedRecord }: Props) {
             alert('Your database connection was unsuccessful, try reloading the page or reaching out to sthompson@norainc.org for support')
         }
     }
+    const {client_first_name, client_last_name} = serializedRecord.client_information.client_info;
+    const {interview_type} = serializedRecord.interview_info;
     return (
         <div className={styles.container}>
             <Head>
@@ -43,13 +45,13 @@ function ClientCardDetail({ serializedRecord }: Props) {
                 <h2>Gift Card Details for:
                 </h2>
                 <h2>
-                {serializedRecord.client_information.client_info.client_first_name}
+                {client_first_name}
                 </h2>
                 <h2>
-                {serializedRecord.client_information.client_info.client_last_name}
+                {client_last_name}
                 </h2>
                 <h3>
-                {serializedRecord.interview_info.interview_type.toString().toUpperCase()}
+                {interview_type.toString().toUpperCase()}
                 </h3>
                 </div>
                     <div className={styles.form}>
