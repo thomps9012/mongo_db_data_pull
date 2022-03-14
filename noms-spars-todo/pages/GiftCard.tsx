@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const collections = ['intake', '6month', '12month', '18month']
         const unreceivedCards = [];
         for (const item in collections) {
-            const collectionCards = await client.db('cards').collection('clients').find({
+            const collectionCards = await client.db('cards').collection(collections[item]).find({
                 gift_card_received: false
             }).project(projection).toArray()
             if (collectionCards.length > 0) {
