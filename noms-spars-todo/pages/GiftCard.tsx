@@ -7,8 +7,8 @@ import { Props } from '../util/Props'
 import { GetServerSideProps } from 'next'
 import React from 'react'
 
-function GiftCard({ serializedRecords }: Props) {
-    const [cardRecords] = useState(serializedRecords);
+function GiftCard({ serializedCards }: Props) {
+    const [cardRecords] = useState(serializedCards);
     return (
         <div className={styles.container}>
             <Head>
@@ -26,14 +26,14 @@ function GiftCard({ serializedRecords }: Props) {
                         <>
                             <h1>Clients below need to receive gift card incentives for NOMS participation</h1>
                             {cardRecords.map(record => {
-                                const { interviewDate, interview_type } = record.interview_info;
-                                const { client_first_name, client_last_name } = record.client_information.client_info;
+                                const { interviewDate, interview_type } = record;
+                                const { client_first_name, client_last_name } = record.client_info;
                                 let year = interviewDate.slice(0, 4);
                                 let month = interviewDate.slice(5, 7)
                                 let day = interviewDate.slice(8, 10)
                                 let formattedDate = `${month}/${day}/${year}`;
                                 return (
-                                    <Link key={JSON.stringify(record._id)} href='/detail/:interview_type/:client_id' as={`/detail/${interview_type}/${record._id}`} passHref>
+                                    <Link key={JSON.stringify(record._id)} href='/carddetail/:interview_type/:client_id' as={`/carddetail/${interview_type}/${record._id}`} passHref>
                                         <div className={styles.card}>
                                             <h2>{client_first_name}</h2>
                                             <h2>{client_last_name}</h2>
@@ -61,20 +61,19 @@ function GiftCard({ serializedRecords }: Props) {
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const { client } = await connectToDatabase();
-        const projection = { _id: 1, client_information: 1, interview_info: 1 }
         const collections = ['intake', '6month', '12month', '18month']
         const unreceivedCards = [];
         for (const item in collections) {
-            const collectionCards = await client.db('cards').collection(collections[item]).find({
+            const collectionCards = await client.db('giftcards').collection(collections[item]).find({
                 gift_card_received: false
-            }).project(projection).toArray()
+            }).toArray()
             if (collectionCards.length > 0) {
                 unreceivedCards.push(...collectionCards)
             }
         }
-        const serializedRecords = JSON.parse(JSON.stringify(unreceivedCards))
+        const serializedCards = JSON.parse(JSON.stringify(unreceivedCards))
         return {
-            props: { serializedRecords: serializedRecords }
+            props: { serializedCards: serializedCards }
         }
     } catch (error) {
         return {

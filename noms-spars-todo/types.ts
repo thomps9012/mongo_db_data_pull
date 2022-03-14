@@ -132,21 +132,17 @@ export const clientRecordInterface = {
 
 export const clientCardInterface = {
     _id: String || null,
-    interview_info: {
-        interviewDate: String || null,
-        interview_type: String || null,
-    },
-    client_information: {
-        client_info: {
-            client_first_name: String || null,
-            client_last_name: String || null,
-            client_email_address: String || null,
-            client_phone_number: String || null,
-            client_street: String || null,
-            client_city: String || null,
-            client_state: String || null,
-            client_zip: String || null
-        },
+    interviewDate: String || null,
+    interview_type: String || null,
+    client_info: {
+        client_first_name: String || null,
+        client_last_name: String || null,
+        client_email_address: String || null,
+        client_phone_number: String || null,
+        client_street: String || null,
+        client_city: String || null,
+        client_state: String || null,
+        client_zip: String || null
     },
     NORA_acknowledged: Boolean || null,
     client_acknowledged: Boolean || null,
