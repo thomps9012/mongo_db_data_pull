@@ -23,36 +23,36 @@ function GiftCard({ serializedRecords }: Props) {
                 </h1>
                 <div className={styles.grid}>
                     {cardRecords.length > 0 ?
-                    <>
-                    <h1>Clients below need to receive gift card incentives for NOMS participation</h1>
-                    {cardRecords.map(record => {
-                        const { interviewDate, interview_type} = record.interview_info;
-                        const { client_first_name, client_last_name} = record.client_information.client_info;
-                        let year = interviewDate.slice(0,4);
-                        let month = interviewDate.slice(5,7)
-                        let day = interviewDate.slice(8,10)
-                        let formattedDate = `${month}/${day}/${year}`;
-                        return (
-                            <Link key={JSON.stringify(record._id)} href='/carddetail/:client_id' as={`/carddetail/${record._id}`} passHref>
-                              <div className={styles.card}>
-                                <h2>{client_first_name}</h2>
-                                <h2>{client_last_name}</h2>
-                                <h3>{interview_type.toUpperCase()}</h3>
-                                <h3>{formattedDate}</h3>
-                              </div>
-                            </Link>
-                          )
-                    })}
-                    </>
-                    :
-                    <h1>All clients who have completed NOMS have received gift card incentives</h1>}
+                        <>
+                            <h1>Clients below need to receive gift card incentives for NOMS participation</h1>
+                            {cardRecords.map(record => {
+                                const { interviewDate, interview_type } = record.interview_info;
+                                const { client_first_name, client_last_name } = record.client_information.client_info;
+                                let year = interviewDate.slice(0, 4);
+                                let month = interviewDate.slice(5, 7)
+                                let day = interviewDate.slice(8, 10)
+                                let formattedDate = `${month}/${day}/${year}`;
+                                return (
+                                    <Link key={JSON.stringify(record._id)} href='/carddetail/:client_id' as={`/carddetail/${record._id}`} passHref>
+                                        <div className={styles.card}>
+                                            <h2>{client_first_name}</h2>
+                                            <h2>{client_last_name}</h2>
+                                            <h3>{interview_type.toUpperCase()}</h3>
+                                            <h3>{formattedDate}</h3>
+                                        </div>
+                                    </Link>
+                                )
+                            })}
+                        </>
+                        :
+                        <h1>All clients who have completed NOMS have received gift card incentives</h1>}
                 </div>
                 <Link href='/'>
-        <a><h4>
-          Take me over to SPARS records instead
-          </h4>
-          </a>
-      </Link>
+                    <a><h4>
+                        Take me over to SPARS records instead
+                    </h4>
+                    </a>
+                </Link>
             </main>
         </div>
     )
@@ -61,13 +61,20 @@ function GiftCard({ serializedRecords }: Props) {
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const { client } = await connectToDatabase();
-        const projection = {_id: 1, client_information: 1, interview_info: 1}
-        const unreceivedCards = await client.db('spars_cmhs').collection('clients').find({
-            gift_card_received: false
-        }).project(projection).toArray()
+        const projection = { _id: 1, client_information: 1, interview_info: 1 }
+        const collections = ['intake', '6month', '12month', '18month']
+        const unreceivedCards = [];
+        for (const item in collections) {
+            const collectionCards = await client.db('cards').collection('clients').find({
+                gift_card_received: false
+            }).project(projection).toArray()
+            if (collectionCards.length > 0) {
+                unreceivedCards.push(...collectionCards)
+            }
+        }
         const serializedRecords = JSON.parse(JSON.stringify(unreceivedCards))
         return {
-            props: {serializedRecords: serializedRecords}
+            props: { serializedRecords: serializedRecords }
         }
     } catch (error) {
         return {
