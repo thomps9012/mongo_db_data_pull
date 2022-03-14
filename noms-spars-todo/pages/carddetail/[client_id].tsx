@@ -75,9 +75,9 @@ function ClientCardDetail({ serializedRecord }: Props) {
 
 export const getServerSideProps: GetServerSideProps =async ({params}) => {
     let client_id = JSON.stringify(params?.client_id);
+    let interview_type = JSON.stringify(params?.interview_type);
     const { client } = await connectToDatabase();
-    // const projection = {_id: 1, client_information: 1, NORA_acknowledged: 1, client_acknowledged: 1, gift_card_received: 1}
-    const clientCardDetail = await client.db('spars_cmhs').collection('clients').findOne({
+    const clientCardDetail = await client.db('giftcards').collection(interview_type).findOne({
         _id: new ObjectId(JSON.parse(client_id))
     })
     let serializedRecord = JSON.parse(JSON.stringify(clientCardDetail));
