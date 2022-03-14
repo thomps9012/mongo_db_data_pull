@@ -1,17 +1,17 @@
 import { MongoClient } from 'mongodb';
-const { DATABASE_URL, DATABASE_NAME } = process.env;
+const { COSMOS_DB, DATABASE } = process.env;
 
 declare global {
     var mongo: any;
 }
 
-if (!DATABASE_URL) {
+if (!COSMOS_DB) {
     throw new Error(
         'Please define a database connection inside the .env file'
     )
 }
 
-if (!DATABASE_NAME) {
+if (!DATABASE) {
     throw new Error(
         'Please define a database name inside the .env file'
         )
@@ -28,11 +28,11 @@ export async function connectToDatabase() {
         return cached.conn;
     }
 
-    if (!cached.promise && DATABASE_URL!=null) {
-        cached.promise = MongoClient.connect(DATABASE_URL).then((client) => {
+    if (!cached.promise && COSMOS_DB!=null) {
+        cached.promise = MongoClient.connect(COSMOS_DB).then((client) => {
             return {
                 client,
-                db: client.db(DATABASE_NAME)
+                db: client.db(DATABASE)
             }
         })
     }

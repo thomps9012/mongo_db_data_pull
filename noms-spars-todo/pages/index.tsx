@@ -26,8 +26,8 @@ function Home({ serializedRecords }: Props) {
             <>
               <h1>Clients below need to be entered into SPARS</h1>
               {records.map(record => {
-                const { interviewDate, interview_type} = record.interview_info;
-                const { client_first_name, client_last_name} = record.client_information.client_info;
+                const { interviewDate, interview_type } = record.interview_info;
+                const { client_first_name, client_last_name } = record.client_information.client_info;
                 let year = interviewDate.slice(0, 4);
                 let month = interviewDate.slice(5, 7)
                 let day = interviewDate.slice(8, 10)
@@ -62,9 +62,16 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const { client } = await connectToDatabase()
     const projection = { _id: 1, client_information: 1, interview_info: 1 }
-    const unenteredRecords = await client.db('spars_cmhs').collection('clients').find({
-      spars_entry: false
-    }).project(projection).toArray()
+    const collections = ['intake', '6month', '12month', '18month']
+    const unenteredRecords = [];
+    for (const item in collections) {
+      const collectionRecords = await client.db('interviews').collection(collections[item]).find({
+        spars_entry: false
+      }).project(projection).toArray()
+      if (collectionRecords.length > 0){
+        unenteredRecords.push(...collectionRecords)
+      }
+    }
     const serializedRecords = JSON.parse(JSON.stringify(unenteredRecords))
     return {
       props: { serializedRecords: serializedRecords }
