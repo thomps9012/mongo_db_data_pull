@@ -11,12 +11,14 @@ export type Props = {
 }
 
 function ClientDetail({ serializedRecord }: Props) {
-    const recordId = JSON.stringify(serializedRecord._id)
-
+    const { interview_type } = serializedRecord.interview_info;
+    const { client_first_name, client_last_name } = serializedRecord.client_information.client_info;
+    const recordId = serializedRecord._id
+    const body = JSON.stringify({ recordId, interview_type })
     let completeEntry = async () => {
         const res = await fetch('/api/completeNOMS', {
             method: 'PUT',
-            body: recordId
+            body: body
         }); if (res.ok) {
             window.location.replace('/')
         }
@@ -24,8 +26,6 @@ function ClientDetail({ serializedRecord }: Props) {
             alert('Your database connection was unsuccessful, try reloading the page or reaching out to sthompson@norainc.org for support')
         }
     }
-    const {client_first_name, client_last_name} = serializedRecord.client_information.client_info;
-    const {interview_type} = serializedRecord.interview_info;
     return (
         <div className={styles.container}>
             <Head>
@@ -57,7 +57,7 @@ function ClientDetail({ serializedRecord }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     let client_id = JSON.stringify(params?.client_id);
-    let interview_type = JSON.stringify(params?.interview_type);
+    let interview_type = params?.interview_type;
     const { client } = await connectToDatabase();
     const clientRecordDetail = await client.db('interviews').collection(interview_type).findOne({
         _id: new ObjectId(JSON.parse(client_id))
