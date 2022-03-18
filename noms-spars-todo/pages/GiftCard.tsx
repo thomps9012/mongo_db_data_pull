@@ -61,7 +61,7 @@ function GiftCard({ serializedCards }: Props) {
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const { client } = await connectToDatabase();
-        const collections = ['intake', '6month', '12month', '18month']
+        const collections = ['intake', '6month', '12month', '18month', 'youth_intake', 'youth_6month', 'youth_12month', 'youth_18month']
         const unreceivedCards = [];
         for (const item in collections) {
             const collectionCards = await client.db('giftcards').collection(collections[item]).find({
