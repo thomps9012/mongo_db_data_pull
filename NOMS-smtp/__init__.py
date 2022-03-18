@@ -1,5 +1,6 @@
 import datetime
 import os
+from pprint import pprint
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
