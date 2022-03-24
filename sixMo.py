@@ -21,7 +21,6 @@ six_month_open = intake.find({
     "interview_info.interviewDate": {"$gte": close_alert.isoformat()},
     "interview_info.interviewDate": {"$lt": open_window.isoformat()}
 }, {"client_information": 1, "interview_info": 1})
-# }, {"interview_info": 1 })
 six_month_close = intake.find({
     'interview_info.interviewDate': {"$gte": close_window.isoformat()},
     'interview_info.interviewDate': {"$lt": close_alert.isoformat()}

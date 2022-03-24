@@ -2,10 +2,10 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "name": "nomssmtp",
+      "schedule": "0 30 9 * * Mon",
+      "name": "nomssmtpTimer",
       "type": "timerTrigger",
-      "direction": "in",
-      "schedule": "0 30 9 * * Mon"
+      "direction": "in"
     }
   ]
 }
