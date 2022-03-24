@@ -5,7 +5,8 @@
       "schedule": "0 30 9 * * Mon",
       "name": "nomssmtpTimer",
       "type": "timerTrigger",
-      "direction": "in"
+      "direction": "in",
+      "runOnStartup": true
     }
   ]
 }
