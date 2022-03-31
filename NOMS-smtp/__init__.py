@@ -17,7 +17,7 @@ from youthYearInt import youth_annual_close_html, youth_annual_open_html
 
 today = datetime.date.today()
 weekStart = str(today.month)+'/'+str(today.day)+'/'+str(today.year)
-def emailSMTP():
+def main(nomssmtpTimer: func.TimerRequest):
     message = Mail(
         from_email='sthompson@norainc.org',
         # to_emails='tosin@norainc.org, aprescott@norainc.org',
@@ -40,22 +40,15 @@ def emailSMTP():
         +'<h3>Youth Interview Windows Closing:</h3>'+youth_eighteen_month_close_html
         )
     )
-
+    utc_timestamp = datetime.datetime.utcnow().replace(
+        tzinfo=datetime.timezone.utc).isoformat()
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
-        return response
-        # print(response.status_code)
-        # print(response.body)
-        # print(response.headers)
+        # return response
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+        logging.info('NOMS SMTP ran at %s', utc_timestamp)
     except Exception as e:
         return (str(e))
-
-def main(nomssmtpTimer: func.TimerRequest) -> emailSMTP():
-    utc_timestamp = datetime.datetime.utcnow().replace(
-        tzinfo=datetime.timezone.utc).isoformat()
-
-    if nomssmtpTimer.past_due:
-        logging.info('The timer is past due!')
-
-    logging.info('NOMS SMTP ran at %s', utc_timestamp)
