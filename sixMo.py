@@ -1,5 +1,4 @@
 import os
-import pprint
 import datetime
 from pymongo import MongoClient
 from datetime import timedelta
@@ -13,9 +12,6 @@ open_window = datetime.datetime.utcnow() + timedelta(weeks=-26)
 close_alert = open_window + timedelta(weeks=-2)
 close_window = open_window + timedelta(weeks=-4)
 
-print(open_window.isoformat())
-print(close_alert.isoformat())
-print(close_window.isoformat())
 # six month interview open and close
 six_month_open = intake.find({
     "interview_info.interviewDate": {"$gte": close_alert.isoformat()},
@@ -26,16 +22,14 @@ six_month_close = intake.find({
     'interview_info.interviewDate': {"$lt": close_alert.isoformat()}
 }, {'client_information': 1, "interview_info": 1})
 
-# Six Month Interview Functionality
-print('Six Month Interviews Complete')
+# six month open
 six_month_int = six_month.find({},{'client_information': 1, 'interview_info': 1})
 complete_six_int_names = []
 for item in six_month_int:
     comp_client = item['client_information']
-    pprint.pprint(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
     complete_six_int_names.append(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
 
-print('Six Month Interview Window Open')
+# six month open
 six_month_open_html = '<ol>'
 for item in six_month_open:
     client = item['client_information']
@@ -53,7 +47,7 @@ for item in six_month_open:
         six_month_open_html += '<li> Client:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
 
 
-print('Six Month Interview Window Closing')
+# six month close
 six_month_close_html = '<ol>'
 for item in six_month_close:
     client = item['client_information']

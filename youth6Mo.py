@@ -1,5 +1,4 @@
 import os
-import pprint
 import datetime
 from pymongo import MongoClient
 from datetime import timedelta
@@ -25,15 +24,14 @@ youth_six_month_close = youth_intake.find({
 }, {'client_information': 1, "interview_info": 1})
 
 # Six Month Interview Functionality
-print('Youth Six Month Interviews Complete')
+# print('Youth Six Month Interviews Complete')
 youth_six_month_int = youth_six_month.find({},{'client_information': 1, 'interview_info': 1})
 complete_six_int_names = []
 for item in youth_six_month_int:
     comp_client = item['client_information']
-    pprint.pprint(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
     complete_six_int_names.append(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
 
-print('Youth Six Month Interview Window Open')
+# print('Youth Six Month Interview Window Open')
 youth_six_month_open_html = '<ol>'
 for item in youth_six_month_open:
     client = item['client_information']
@@ -51,7 +49,7 @@ for item in youth_six_month_open:
         youth_six_month_open_html += '<li> Client:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
 
 
-print('Youth Six Month Interview Window Closing')
+# print('Youth Six Month Interview Window Closing')
 youth_six_month_close_html = '<ol>'
 for item in youth_six_month_close:
     client = item['client_information']

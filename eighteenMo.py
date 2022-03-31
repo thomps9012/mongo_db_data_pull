@@ -1,5 +1,4 @@
 import os
-import pprint
 import datetime
 from pymongo import MongoClient
 from datetime import timedelta
@@ -35,20 +34,18 @@ eighteen_month_close = year.find({
 # }, {'client_information': 1})
 
 # 18 Month Interview Functionality
-print('18 Month Interviews Complete')
+# print('18 Month Interviews Complete')
 eighteen_month_int = eighteen_month.find({},{'client_information': 1, 'interview_info': 1})
 complete_eighteen_month_int_names = []
 for item in eighteen_month_int:
     comp_client = item['client_information']
-    pprint.pprint(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
     complete_eighteen_month_int_names.append(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
 
-print('18 Month Interview Window Open')
+# print('18 Month Interview Window Open')
 eighteen_month_open_html = '<ol>'
 for item in eighteen_month_open:
     client = item['client_information']
     if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_eighteen_month_int_names:
-        pprint.pprint(client['client_info']['client_first_name'])
         client_info = '<ul>'
         contact_info = '<ul>'
 
@@ -61,12 +58,11 @@ for item in eighteen_month_open:
         client_info = client_info+'</ul>'
         eighteen_month_open_html += '<li> Client:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
 
-print('18 Month Interview Window Close')
+# print('18 Month Interview Window Close')
 eighteen_month_close_html = '<ol>'
 for item in eighteen_month_close:
     client = item['client_information']
     if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_eighteen_month_int_names:
-        pprint.pprint(client['client_info']['client_first_name'], client['client_info']['client_last_name'])
         client_info = '<ul>'
         contact_info = '<ul>'
 

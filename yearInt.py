@@ -1,5 +1,4 @@
 import os
-import pprint
 import datetime
 from pymongo import MongoClient
 from datetime import timedelta
@@ -24,20 +23,18 @@ year_close = six_month.find({
 }, {'client_information': 1, "interview_info": 1})
 
 # Annual Interview Functionality
-print('Annual Interviews Complete')
+# Annual Interview Open
 annual_int = year.find({},{'client_information': 1, "interview_info": 1})
 complete_annual_int_names = []
 for item in annual_int:
     comp_client = item['client_information']
-    pprint.pprint(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
     complete_annual_int_names.append(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
 
-print('Annual Interview Window Open')
+# Annual Interview Close
 annual_open_html = '<ol>'
 for item in year_open:
     client = item['client_information']
     if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_annual_int_names:
-        pprint.pprint(client['client_info']['client_first_name'])
         client_info = '<ul>'
         contact_info = '<ul>'
 
@@ -51,14 +48,12 @@ for item in year_open:
         annual_open_html += '<li> Client:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
 
 
-print('Annual Interview Window Close')
 annual_close_html = '<ol>'
 for item in year_close:
     client = item['client_information']
     del client['interviewDate']
     del client['interview_type']
     if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_annual_int_names:
-        pprint.pprint(client['client_info']['client_first_name'])
         client_info = '<ul>'
         contact_info = '<ul>'
 
