@@ -4,3 +4,6 @@
 
 azure-functions
 sendgrid
+pymongo
+datetime
+logging
