@@ -15,14 +15,12 @@ from youth18Mo import (youth_eighteen_month_close_html,
                        youth_eighteen_month_open_html)
 from youthYearInt import youth_annual_close_html, youth_annual_open_html
 
-today = datetime.date.today()
-weekStart = str(today.month)+'/'+str(today.day)+'/'+str(today.year)
 def main(nomssmtpTimer: func.TimerRequest):
     message = Mail(
         from_email='sthompson@norainc.org',
         # to_emails='tosin@norainc.org, aprescott@norainc.org',
         to_emails='thomps9012@gmail.com',
-        subject='Client Interview Report for Week of: '+weekStart,
+        subject='Client Interview Report for Week of: '+str(datetime.date.today()),
         html_content= (
         '<h1>Client Interview Report for Week of: '+str(datetime.date.today())
         + '</h1><hr /><br /><h2>Six Month Interviews</h2><hr /> <h3>Interview Windows Opening:</h3> '
