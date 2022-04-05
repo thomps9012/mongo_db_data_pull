@@ -79,11 +79,17 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     let client_id = JSON.stringify(params?.client_id);
     let interview_type = params?.interview_type;
     const { client } = await connectToDatabase();
-    const clientCardDetail = await client.db('giftcards').collection(interview_type).findOne({
-        _id: new ObjectId(JSON.parse(client_id))
-    })
-    console.log(clientCardDetail)
-    let serializedRecord = JSON.parse(JSON.stringify(clientCardDetail));
+    const possibleColls = [interview_type, `youth_${interview_type}`];
+    let recordDetail;
+    for (const collection in possibleColls) {
+        const clientCardDetail = await client.db('giftcards').collection(possibleColls[collection]).findOne({
+            _id: new ObjectId(JSON.parse(client_id))
+        })
+        if (clientCardDetail != null) {
+            recordDetail = clientCardDetail;
+        }
+    }
+    let serializedRecord = JSON.parse(JSON.stringify(recordDetail));
     return {
         props: { serializedRecord }
     }

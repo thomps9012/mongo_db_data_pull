@@ -6,9 +6,14 @@ export default async function handler(req: { body: any }, res: { json: (arg0: an
     let data = JSON.parse(req.body);
     console.log(data)
     const { interview_type, recordId } = data;
-    const response = await client.db('interviews').collection(interview_type).updateOne(
-        { _id: new ObjectId(recordId) },
-        { $set: { spars_entry: true } }
-    )
-    res.json(response)
+    const possibleColls = [interview_type, `youth_${interview_type}`];
+    for (const collection in possibleColls) {
+        const response = await client.db('interviews').collection(possibleColls[collection]).updateOne(
+            { _id: new ObjectId(recordId) },
+            { $set: { spars_entry: true } }
+        )
+        if (response != null) {
+            res.json(response)
+        }
+    }
 }
