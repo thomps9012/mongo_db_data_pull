@@ -1,7 +1,9 @@
 import { CardOverview } from "../../util/CardOverview";
 
 
-export default function CardTable(records: CardOverview[]) {
+export default function CardTable(records: any) {
+    console.log(records)
+    const cardRecords = records.records;
     return (
         <table>
             <thead>
@@ -15,7 +17,7 @@ export default function CardTable(records: CardOverview[]) {
                 </tr>
             </thead>
             <tbody>
-                {records.map((record: CardOverview) => {
+                {cardRecords.map((record: CardOverview) => {
                     const {gift_card_received, NORA_acknowledged, client_acknowledged, interview_type, interviewDate, client_info} = record;
                     const {client_first_name, client_last_name} = client_info;
                     const client_name = `${client_first_name} ${client_last_name}`;
@@ -24,9 +26,9 @@ export default function CardTable(records: CardOverview[]) {
                             <td>{client_name}</td>
                             <td>{interview_type}</td>
                             <td>{interviewDate}</td>
-                            <td>{gift_card_received}</td>
-                            <td>{NORA_acknowledged}</td>
-                            <td>{client_acknowledged}</td>
+                            <td>{gift_card_received ? 'Yes' : 'No'}</td>
+                            <td>{NORA_acknowledged ? 'Yes' : 'No'}</td>
+                            <td>{client_acknowledged ? 'Yes' : 'No'}</td>
                         </tr>
                     )
                 })}
