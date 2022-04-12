@@ -8,7 +8,6 @@ import CardTable from './CardTable';
 
 
 export default function AdminPage({ serializedCards }: Props) {
-    console.log('serializedCards', serializedCards[0])
     const [cardRecords] = useState(serializedCards[0]);
     return (
         <div className={styles.container}>
