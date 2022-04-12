@@ -1,7 +1,7 @@
 export type CardOverview = {
     _id: String;
     gift_card_received: Boolean;
-    NORA_acknowleged: Boolean;
+    NORA_acknowledged: Boolean;
     client_acknowledged: Boolean;
     interviewDate: String;
     interview_type: String;
