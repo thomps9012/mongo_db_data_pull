@@ -7,8 +7,27 @@ import { Props } from '../../util/Props'
 import CardTable from './CardTable';
 
 
-export default function AdminPage({ serializedCards }: Props) {
-    const [cardRecords] = useState(serializedCards[0]);
+export default function AdminPage({ serializedCards }: any) {
+    const records = serializedCards[0];
+    const [cardRecords, setRecords] = useState(records);
+    const [searchName, setName] = useState('');
+    const [cardReceived, setCardRecieved] = useState(false);
+    const [searchDate, setDate] = useState(Date.now());
+    const nameFilter = () => {
+        const filteredRecords = records.filter((card: { name: string; }) => card.name.toLowerCase().includes(searchName.toLowerCase()));
+        setRecords(filteredRecords);
+    }
+    const dateFilter = () => {
+        const filteredRecords = records.filter((card: { date: number; }) => card.date.toString().includes(searchDate.toString()));
+        setRecords(filteredRecords);
+    }
+    const cardStatusFilter = () => {
+        setCardRecieved(!cardReceived);
+        console.log(records)
+        const filteredRecords = records.filter((card: { gift_card_received: boolean; }) => card.gift_card_received === cardReceived);
+        setRecords(filteredRecords);
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -17,6 +36,17 @@ export default function AdminPage({ serializedCards }: Props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={styles.main}>
+                <div className='row'>
+                    <input type="text" onChange={(e:any) => setName(e.target.value)} placeholder="Search" />
+                    <button onClick={nameFilter}>Filter By Name</button>
+                </div>
+                <div className='row'>
+                    <input type='date' onChange={(e: any) => setDate(e.target.value)} />
+                    <button onClick={dateFilter}>Filter By Date</button>
+                </div>
+                <div className='row'>
+                    <button onClick={cardStatusFilter}>{cardReceived ? 'Hide' : 'Show'} Interviews Who Have Received Cards</button>
+                </div>
                 <CardTable records={cardRecords} />
             </main>
         </div>
