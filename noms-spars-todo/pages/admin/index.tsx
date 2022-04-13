@@ -11,16 +11,21 @@ export default function AdminPage({ serializedCards }: any) {
     const records = serializedCards[0];
     const [cardRecords, setRecords] = useState(records);
     const [searchName, setName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [cardReceived, setCardRecieved] = useState(false);
     const [searchDate, setDate] = useState(Date.now());
     const nameFilter = () => {
-        const filteredRecords = records.filter((card: { name: string; }) => card.name.toLowerCase().includes(searchName.toLowerCase()));
+        const filteredRecords = records.filter((card: { client_info: { client_first_name: string; } }) => card.client_info.client_first_name.toLowerCase().includes(searchName.toLowerCase()));
+        setRecords(filteredRecords);
+    }
+    const lastNameFilter = () => {
+        const filteredRecords = records.filter((card: { client_info: { client_last_name: string; } }) => card.client_info.client_last_name.toLowerCase().includes(lastName.toLowerCase()));
         setRecords(filteredRecords);
     }
     const dateFilter = () => {
-       const filteredRecords = records.filter((card: {interviewDate: string;}) => card.interviewDate.substring(0, 10) === searchDate.toString().substring(0, 10)
+        const filteredRecords = records.filter((card: { interviewDate: string; }) => card.interviewDate.substring(0, 10) === searchDate.toString().substring(0, 10)
         );
-       setRecords(filteredRecords);
+        setRecords(filteredRecords);
     }
     const cardStatusFilter = () => {
         setCardRecieved(!cardReceived);
@@ -37,16 +42,17 @@ export default function AdminPage({ serializedCards }: any) {
             </Head>
             <main className={styles.main}>
                 <div className='row'>
-                    <input type="text" onChange={(e:any) => setName(e.target.value)} placeholder="Search" />
-                    <button onClick={nameFilter}>Filter By Name</button>
+                        <input type="text" onChange={(e: any) => setName(e.target.value)} placeholder="Search" />
+                        <button onClick={nameFilter}>Filter By First Name</button>
+                        <input type="text" onChange={(e: any) => setLastName(e.target.value)} placeholder="Search" />
+                        <button onClick={lastNameFilter}>Filter By Last Name</button>
                 </div>
                 <div className='row'>
                     <input type='date' onChange={(e: any) => setDate(e.target.value)} />
                     <button onClick={dateFilter}>Filter By Date</button>
-                </div>
-                <div className='row'>
                     <button onClick={cardStatusFilter}>{cardReceived ? 'Hide' : 'Show'} Interviews Who Have Received Cards</button>
                 </div>
+                <button onClick={() => setRecords(records)}>Reset</button>
                 <CardTable records={cardRecords} />
             </main>
         </div>
