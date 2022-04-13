@@ -18,12 +18,12 @@ export default function AdminPage({ serializedCards }: any) {
         setRecords(filteredRecords);
     }
     const dateFilter = () => {
-        const filteredRecords = records.filter((card: { date: number; }) => card.date.toString().includes(searchDate.toString()));
-        setRecords(filteredRecords);
+       const filteredRecords = records.filter((card: {interviewDate: string;}) => card.interviewDate.substring(0, 10) === searchDate.toString().substring(0, 10)
+        );
+       setRecords(filteredRecords);
     }
     const cardStatusFilter = () => {
         setCardRecieved(!cardReceived);
-        console.log(records)
         const filteredRecords = records.filter((card: { gift_card_received: boolean; }) => card.gift_card_received === cardReceived);
         setRecords(filteredRecords);
     }
