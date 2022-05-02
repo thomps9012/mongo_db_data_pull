@@ -10,7 +10,6 @@ six_month = db['6month']
 
 open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
 close_alert = open_window + timedelta(weeks=4)
-close_window = open_window + timedelta(weeks=8)
 
 # six month interview open and close
 six_month_open = intake.find({
@@ -18,7 +17,6 @@ six_month_open = intake.find({
     "interview_info.interviewDate": {"$lt": open_window.isoformat()}
 }, {"client_information": 1, "interview_info": 1})
 six_month_close = intake.find({
-    'interview_info.interviewDate': {"$gte": close_window.isoformat()},
     'interview_info.interviewDate': {"$lt": close_alert.isoformat()}
 }, {'client_information': 1, "interview_info": 1})
 

@@ -10,7 +10,6 @@ eighteen_month = db['18month']
 
 open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
 close_alert = open_window + timedelta(weeks=4)
-close_window = open_window + timedelta(weeks=8)
 
 
 # eighteen month interview open and close
@@ -19,7 +18,6 @@ eighteen_month_open = year.find({
     'client_information.interviewDate': {"$lt": open_window.isoformat()}
 }, {'client_information': 1, 'interview_info': 1})
 eighteen_month_close = year.find({
-     'client_information.interviewDate': {"$gte": close_window.isoformat()},
      'client_information.interviewDate': {"$lt": close_alert.isoformat()}
  }, {'client_information': 1, 'interview_info': 1})
 
