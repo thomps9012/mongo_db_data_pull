@@ -8,9 +8,9 @@ db = client['interviews']
 year = db['12month']
 eighteen_month = db['18month']
 
-open_window = datetime.datetime.utcnow() + timedelta(weeks=-26)
-close_alert = open_window + timedelta(weeks=-2)
-close_window = open_window + timedelta(weeks=-4)
+open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
+close_alert = open_window + timedelta(weeks=4)
+close_window = open_window + timedelta(weeks=8)
 
 
 # eighteen month interview open and close

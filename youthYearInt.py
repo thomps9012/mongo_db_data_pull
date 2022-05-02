@@ -8,9 +8,9 @@ db = client['interviews']
 youth_six_month = db['youth_6month']
 year = db['youth_12month']
 
-open_window = datetime.datetime.utcnow() + timedelta(weeks=-26)
-close_alert = open_window + timedelta(weeks=-2)
-close_window = open_window + timedelta(weeks=-4)
+open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
+close_alert = open_window + timedelta(weeks=4)
+close_window = open_window + timedelta(weeks=8)
 
 youth_year_open = youth_six_month.find({
     'client_information.interviewDate': {"$gte": close_alert.isoformat()},

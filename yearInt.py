@@ -8,9 +8,9 @@ db = client['interviews']
 six_month = db['6month']
 year = db['12month']
 
-open_window = datetime.datetime.utcnow() + timedelta(weeks=-26)
-close_alert = open_window + timedelta(weeks=-2)
-close_window = open_window + timedelta(weeks=-4)
+open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
+close_alert = open_window + timedelta(weeks=4)
+close_window = open_window + timedelta(weeks=8)
 
 
 year_open = six_month.find({
