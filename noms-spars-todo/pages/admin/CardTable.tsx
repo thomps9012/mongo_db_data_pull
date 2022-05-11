@@ -17,7 +17,8 @@ export default function CardTable(records: any) {
                 </tr>
             </thead>
             <tbody>
-                {cardRecords.map((record: CardOverview) => {
+                {cardRecords?
+                cardRecords.map((record: CardOverview) => {
                     const {gift_card_received, NORA_acknowledged, client_acknowledged, interview_type, interviewDate, client_info} = record;
                     const {client_first_name, client_last_name} = client_info;
                     const client_name = `${client_first_name} ${client_last_name}`;
@@ -31,7 +32,7 @@ export default function CardTable(records: any) {
                             <td>{client_acknowledged ? 'Yes' : 'No'}</td>
                         </tr>
                     )
-                })}
+                }) :<tr>No Records Found</tr>}
             </tbody>
         </table>
     )
