@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const collections = ['intake', '6month', '12month', '18month', 'youth_intake', 'youth_6month', 'youth_12month', 'youth_18month']
     const unenteredRecords = [];
     for (const item in collections) {
-      const collectionRecords = await client.db('interviews').collection(collections[item]).find({
+      const collectionRecords = await client.db.collection(collections[item]).find({
         spars_entry: false
       }).project(projection).toArray()
       if (collectionRecords.length > 0){

@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const possibleColls = [interview_type , `youth_${interview_type}`];
     let recordDetail;
     for(const collection in possibleColls){
-        const clientRecordDetail = await client.db('interviews').collection(possibleColls[collection]).findOne({
+        const clientRecordDetail = await client.db.collection(possibleColls[collection]).findOne({
             _id: new ObjectId(JSON.parse(client_id))
         })
         if(clientRecordDetail != null){

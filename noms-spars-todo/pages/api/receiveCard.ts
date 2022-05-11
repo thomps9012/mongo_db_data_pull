@@ -7,7 +7,7 @@ export default async function handler(req: { body: any }, res: { json: (arg0: an
     const { nora, card_type, card_amt, recordId, interviewtype } = data;
     const possibleColls = [interviewtype, `youth_${interviewtype}`];
     for (const collection in possibleColls) {
-        const response = await client.db('giftcards').collection(possibleColls[collection]).updateOne(
+        const response = await client.db.collection(possibleColls[collection]+'_giftcards').updateOne(
             { _id: new ObjectId(recordId) },
             {
                 $set: {

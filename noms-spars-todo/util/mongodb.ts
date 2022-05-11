@@ -1,11 +1,11 @@
 import { MongoClient } from 'mongodb';
-const { COSMOS_DB, DATABASE } = process.env;
+const { ATLAS_URI, DATABASE } = process.env;
 
 declare global {
     var mongo: any;
 }
 
-if (!COSMOS_DB) {
+if (!ATLAS_URI) {
     throw new Error(
         'Please define a database connection inside the .env file'
     )
@@ -28,8 +28,8 @@ export async function connectToDatabase() {
         return cached.conn;
     }
 
-    if (!cached.promise && COSMOS_DB!=null) {
-        cached.promise = MongoClient.connect(COSMOS_DB).then((client) => {
+    if (!cached.promise && ATLAS_URI!=null) {
+        cached.promise = MongoClient.connect(ATLAS_URI).then((client) => {
             return {
                 client,
                 db: client.db(DATABASE)

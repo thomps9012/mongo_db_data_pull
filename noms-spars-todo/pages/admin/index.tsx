@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { connectToDatabase } from '../../util/mongodb';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
-import { Props } from '../../util/Props'
 import CardTable from './CardTable';
 
 
@@ -66,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const cards = [];
         const collections = ['intake', '6month', '12month', '18month', 'youth_intake', 'youth_6month', 'youth_12month', 'youth_18month']
         for (const item in collections) {
-            const cardRecords = await client.db('giftcards').collection(collections[item]).find({}).project(card_projection).toArray();
+            const cardRecords = await client.db.collection(collections[item]+'_giftcards').find({}).project(card_projection).toArray();
             if (cardRecords.length > 0) {
                 cards.push(cardRecords);
             }
