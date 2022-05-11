@@ -60,7 +60,7 @@ export default function AdminPage({ serializedCards }: any) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
-        const { client } = await connectToDatabase();
+        const { client, db} = await connectToDatabase();
         const card_projection = { _id: 1, client_info: 1, interviewDate: 1, interview_type: 1, gift_card_received: 1, NORA_acknowledged: 1, client_acknowledged: 1 }
         const cards = [];
         const collections = ['intake', '6month', '12month', '18month', 'youth_intake', 'youth_6month', 'youth_12month', 'youth_18month']

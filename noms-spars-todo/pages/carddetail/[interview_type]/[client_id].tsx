@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     console.log(params)
     let client_id = JSON.stringify(params?.client_id);
     let interview_type = params?.interview_type;
-    const { client } = await connectToDatabase();
+    const { client, db} = await connectToDatabase();
     const possibleColls = [interview_type, `youth_${interview_type}`];
     let recordDetail;
     for (const collection in possibleColls) {

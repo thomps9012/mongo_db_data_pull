@@ -18,11 +18,11 @@ export default function CardTable(records: any) {
             </thead>
             <tbody>
                 {cardRecords.map((record: CardOverview) => {
-                    const {gift_card_received, NORA_acknowledged, client_acknowledged, interview_type, interviewDate, client_info, _id} = record;
+                    const {gift_card_received, NORA_acknowledged, client_acknowledged, interview_type, interviewDate, client_info} = record;
                     const {client_first_name, client_last_name} = client_info;
                     const client_name = `${client_first_name} ${client_last_name}`;
                     return (
-                        <tr key={JSON.stringify(_id)}>
+                        <tr key={client_name}>
                             <td>{client_name}</td>
                             <td>{interview_type}</td>
                             <td>{interviewDate}</td>
