@@ -91,6 +91,3 @@ for item in six_month_close:
 
 six_month_open_html = six_month_open_html+'</ol>'
 six_month_close_html = six_month_close_html+'</ol>'
-
-six_month_atlas_open_html = '<ol>'
-
