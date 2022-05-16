@@ -3,34 +3,35 @@ import datetime
 from pymongo import MongoClient
 from datetime import timedelta
 
-client = MongoClient(os.environ.get('NOMSDB_URI'))
+client = MongoClient(os.environ.get('ATLAS_URI'))
 db = client['interviews']
-intake = db['intake']
-six_month = db['6month']
+youth_intake = db['youth_intake']
+youth_six_month = db['youth_6month']
 
 open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
 close_alert = open_window + timedelta(weeks=4)
 
 # six month interview open and close
-six_month_open = intake.find({
+youth_six_month_open = youth_intake.find({
     "interview_info.interviewDate": {"$gte": close_alert.isoformat()},
     "interview_info.interviewDate": {"$lt": open_window.isoformat()}
 }, {"client_information": 1, "interview_info": 1})
-six_month_close = intake.find({
+# }, {"interview_info": 1 })
+youth_six_month_close = youth_intake.find({
     'interview_info.interviewDate': {"$lt": close_alert.isoformat()}
 }, {'client_information': 1, "interview_info": 1})
 
-
-# six month open
-six_month_int = six_month.find({},{'client_information': 1, 'interview_info': 1})
+# Six Month Interview Functionality
+# print('Youth Six Month Interviews Complete')
+youth_six_month_int = youth_six_month.find({},{'client_information': 1, 'interview_info': 1})
 complete_six_int_names = []
-for item in six_month_int:
+for item in youth_six_month_int:
     comp_client = item['client_information']
     complete_six_int_names.append(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
 
-# six month open
-six_month_open_html = '<ol>'
-for item in six_month_open:
+# print('Youth Six Month Interview Window Open')
+youth_six_month_open_html = '<ol>'
+for item in youth_six_month_open:
     client = item['client_information']
     if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_six_int_names:
         client_info = '<ul>'
@@ -43,12 +44,12 @@ for item in six_month_open:
 
         contact_info = contact_info+'</ul>'
         client_info = client_info+'</ul>'
-        six_month_open_html += '<li> Client:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
+        youth_six_month_open_html += '<li> Client:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
 
 
-# six month close
-six_month_close_html = '<ol>'
-for item in six_month_close:
+# print('Youth Six Month Interview Window Closing')
+youth_six_month_close_html = '<ol>'
+for item in youth_six_month_close:
     client = item['client_information']
     if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_six_int_names:
         client_info = '<ul>'
@@ -61,7 +62,7 @@ for item in six_month_close:
     
         contact_info = contact_info+'</ul>'
         client_info = client_info+'</ul>'
-        six_month_close_html += '<li> Client Information:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
+        youth_six_month_close_html += '<li> Client Information:'+client_info+'<br /> Emergency Contact:'+contact_info+'</li>'
 
 
 # Two Year Interview Functionality
@@ -89,8 +90,6 @@ for item in six_month_close:
     # del client['interview_type']
     # pprint.pprint(client)
 
-six_month_open_html = six_month_open_html+'</ol>'
-six_month_close_html = six_month_close_html+'</ol>'
-
-six_month_atlas_open_html = '<ol>'
+youth_six_month_open_html = youth_six_month_open_html+'</ol>'
+youth_six_month_close_html = youth_six_month_close_html+'</ol>'
 

@@ -3,36 +3,36 @@ import datetime
 from pymongo import MongoClient
 from datetime import timedelta
 
-client = MongoClient(os.environ.get('NOMSDB_URI'))
-db = client['interviews']
-intake = db['intake']
-six_month = db['6month']
+atlas_client = MongoClient(os.environ.get('ATLAS_URI'))
+atlas_db = atlas_client['noms-interviews']
+atlas_intake = atlas_db['intake']
+atlas_six_month = atlas_db['6month']
 
 open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
 close_alert = open_window + timedelta(weeks=4)
 
 # six month interview open and close
-six_month_open = intake.find({
+atlas_six_month_open = atlas_intake.find({
     "interview_info.interviewDate": {"$gte": close_alert.isoformat()},
     "interview_info.interviewDate": {"$lt": open_window.isoformat()}
 }, {"client_information": 1, "interview_info": 1})
-six_month_close = intake.find({
+atlas_six_month_close = atlas_intake.find({
     'interview_info.interviewDate': {"$lt": close_alert.isoformat()}
 }, {'client_information': 1, "interview_info": 1})
 
 
 # six month open
-six_month_int = six_month.find({},{'client_information': 1, 'interview_info': 1})
-complete_six_int_names = []
-for item in six_month_int:
+six_month_int_atlas = atlas_six_month.find({},{'client_information': 1, 'interview_info': 1})
+complete_six_int_names_atlas = []
+for item in six_month_int_atlas:
     comp_client = item['client_information']
-    complete_six_int_names.append(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
+    complete_six_int_names_atlas.append(comp_client['client_info']['client_first_name'], comp_client['client_info']['client_last_name'])
 
 # six month open
 six_month_open_html = '<ol>'
-for item in six_month_open:
+for item in atlas_six_month_open:
     client = item['client_information']
-    if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_six_int_names:
+    if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_six_int_names_atlas:
         client_info = '<ul>'
         contact_info = '<ul>'
 
@@ -48,7 +48,7 @@ for item in six_month_open:
 
 # six month close
 six_month_close_html = '<ol>'
-for item in six_month_close:
+for item in atlas_six_month_close:
     client = item['client_information']
     if client['client_info']['client_first_name'] and client['client_info']['client_last_name'] not in complete_six_int_names:
         client_info = '<ul>'
@@ -91,6 +91,3 @@ for item in six_month_close:
 
 six_month_open_html = six_month_open_html+'</ol>'
 six_month_close_html = six_month_close_html+'</ol>'
-
-six_month_atlas_open_html = '<ol>'
-
