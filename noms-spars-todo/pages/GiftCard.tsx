@@ -42,7 +42,9 @@ function GiftCard({ serializedCards }: Props) {
                                                 'Intake'
                                                 : interview_type === 'discharge' ?
                                                     'Discharge'
-                                                    : interview_type + ' Month'}</h3>
+                                                    : /youth_\w+/g.test(JSON.stringify(interview_type)) ?
+                                                        toTitleCase(interview_type.slice(0, 5)) + ' ' + toTitleCase(interview_type.slice(6))
+                                                        : interview_type + ' Month'}</h3>
                                             <h3>{formattedDate}</h3>
                                         </div>
                                     </Link>
