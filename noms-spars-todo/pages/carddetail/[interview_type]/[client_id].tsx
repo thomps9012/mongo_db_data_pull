@@ -1,20 +1,16 @@
 import { GetServerSideProps } from "next";
-import { clientCardInterface } from '../../../types'
 import { connectToDatabase } from "../../../util/mongodb";
 import { ObjectId } from "mongodb";
 import styles from '../../../styles/Home.module.css';
 import Head from 'next/head';
 import React, { useState } from 'react';
 import toTitleCase from "../../../util/titleCase";
+import { Props } from "../../../util/Props";
 
-export type Props = {
-    serializedRecord: typeof clientCardInterface;
-}
-
-function ClientCardDetail({ serializedRecord }: Props) {
-    const recordId = serializedRecord._id
-    const { interview_type } = serializedRecord;
-    const { client_first_name, client_last_name } = serializedRecord.client_info;
+function ClientCardDetail({serializedCard}: Props) {
+    const recordId = serializedCard._id
+    const { interview_type } = serializedCard;
+    const { client_first_name, client_last_name } = serializedCard.client_info;
     const [card_type, setCardType] = useState('')
     const [card_amt, setCardAmt] = useState(0.0)
     const [client, setClient] = useState(false)
@@ -80,7 +76,6 @@ function ClientCardDetail({ serializedRecord }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    console.log(params)
     let client_id = JSON.stringify(params?.client_id);
     let interview_type = params?.interview_type;
     const { db } = await connectToDatabase();
@@ -94,9 +89,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             recordDetail = clientCardDetail;
         }
     }
-    let serializedRecord = JSON.parse(JSON.stringify(recordDetail));
+    let serializedCard = JSON.parse(JSON.stringify(recordDetail));
     return {
-        props: { serializedRecord }
+        props: { serializedCard }
     }
 }
 

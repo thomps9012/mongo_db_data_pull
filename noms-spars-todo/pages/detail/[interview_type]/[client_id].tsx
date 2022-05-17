@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import { clientRecordInterface } from '../../../types'
+import { Props } from "../../../util/Props";
 import { connectToDatabase } from "../../../util/mongodb";
 import { ObjectId } from "mongodb";
 import styles from '../../../styles/Home.module.css';
@@ -7,11 +7,7 @@ import Head from "next/head";
 import React from 'react';
 import toTitleCase from "../../../util/titleCase";
 
-export type Props = {
-    serializedRecord: typeof clientRecordInterface;
-}
-
-function ClientDetail({ serializedRecord }: Props) {
+function ClientDetail({serializedRecord}: Props) {
     const { interview_type } = serializedRecord.interview_info;
     const { client_first_name, client_last_name } = serializedRecord.client_information.client_info;
     const recordId = serializedRecord._id

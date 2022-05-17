@@ -2,7 +2,6 @@ import { CardOverview } from "../../util/CardOverview";
 
 
 export default function CardTable(records: any) {
-    console.log(records)
     const cardRecords = records.records;
     return (
         <table>
