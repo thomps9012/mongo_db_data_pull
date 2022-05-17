@@ -38,10 +38,12 @@ function ClientDetail({ serializedRecord }: Props) {
                     {toTitleCase(client_last_name)}
                 </h1>
                 <h2>
-                    {interview_type === 'intake' ?
+                {interview_type === 'intake' ?
                         'Intake'
                         : interview_type === 'discharge' ?
-                            'Discharge'
+                          'Discharge'
+                          : /youth_\w+/g.test(JSON.stringify(interview_type)) ?
+                             toTitleCase(interview_type.slice(0,5)) +' '+ toTitleCase(interview_type.slice(6))
                             : interview_type + ' Month'}
                 </h2>
                 <div className={styles.grid}>
