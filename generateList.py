@@ -2,18 +2,18 @@ import os
 import datetime
 from pymongo import MongoClient
 
-client = MongoClient(os.getenv('NOMSDB_URI'))
-db = client['interviews']
+dbclient = MongoClient(os.getenv('ATLAS_URI'))
+db = dbclient.get_database['noms-interviews']
 
-intake = db['intake']
-six_month = db['6month']
-year = db['12month']
-eighteen_month = db['18month']
+intake = db.get_collection('intake')
+six_month = db.get_collection('6month')
+year = db.get_collection('12month')
+eighteen_month = db.get_collection('18month')
 
-youth_intake = db['youth_intake']
-youth_six_month = db['youth_6month']
-youth_year = db['youth_12month']
-youth_eighteen_month = db['youth_18month']
+youth_intake = db.get_collection('youth_intake')
+youth_six_month = db.get_collection('youth_6month')
+youth_year = db.get_collection('youth_12month')
+youth_eighteen_month = db.get_collection('youth_18month')
 
 today = datetime.datetime.today()
 
