@@ -18,8 +18,8 @@ from atlasYouth18Mo import (youth_eighteen_month_close_html,
 def main(nomssmtpTimer: func.TimerRequest):
     message = Mail(
         from_email='sthompson@norainc.org',
-        to_emails='tosin@norainc.org, aprescott@norainc.org, sthompson@norainc.org',
-        # to_emails='thomps9012@gmail.com',
+        # to_emails='tosin@norainc.org, aprescott@norainc.org, sthompson@norainc.org',
+        to_emails='thomps9012@gmail.com',
         subject='Client Interview Report for Week of: '+str(datetime.date.today()),
         html_content= (
         '<h1>Client Interview Report for Week of: '+str(datetime.date.today())
