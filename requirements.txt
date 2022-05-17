@@ -6,4 +6,3 @@ azure-functions
 sendgrid
 pymongo[srv]
 datetime
-pymongo[srv]
