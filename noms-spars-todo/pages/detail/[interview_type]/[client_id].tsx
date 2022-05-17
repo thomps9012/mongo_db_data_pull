@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb";
 import styles from '../../../styles/Home.module.css';
 import Head from "next/head";
 import React from 'react';
+import toTitleCase from "../../../util/titleCase";
 
 export type Props = {
     serializedRecord: typeof clientRecordInterface;
@@ -35,13 +36,17 @@ function ClientDetail({ serializedRecord }: Props) {
             </Head>
             <main className={styles.main}>
                 <h1>
-                    {client_first_name}
+                    {toTitleCase(client_first_name)}
                 </h1>
                 <h1>
-                    {client_last_name}
+                    {toTitleCase(client_last_name)}
                 </h1>
                 <h2>
-                    {interview_type.toString().toUpperCase()}
+                    {interview_type === 'intake' ?
+                        'Intake'
+                        : interview_type === 'discharge' ?
+                            'Discharge'
+                            : interview_type + ' Month'}
                 </h2>
                 <div className={styles.grid}>
                     <pre className={styles.code}>
@@ -58,14 +63,14 @@ function ClientDetail({ serializedRecord }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     let client_id = JSON.stringify(params?.client_id);
     let interview_type = params?.interview_type;
-    const { client, db} = await connectToDatabase();
-    const possibleColls = [interview_type , `youth_${interview_type}`];
+    const { db } = await connectToDatabase();
+    const possibleColls = [interview_type, `youth_${interview_type}`];
     let recordDetail;
-    for(const collection in possibleColls){
-        const clientRecordDetail = await client.db.collection(possibleColls[collection]).findOne({
+    for (const collection in possibleColls) {
+        const clientRecordDetail = await db.collection(possibleColls[collection]).findOne({
             _id: new ObjectId(JSON.parse(client_id))
         })
-        if(clientRecordDetail != null){
+        if (clientRecordDetail != null) {
             recordDetail = clientRecordDetail;
         }
     }

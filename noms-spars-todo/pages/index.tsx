@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Props } from '../util/Props'
 import { GetServerSideProps } from 'next'
 import React from 'react'
+import toTitleCase from '../util/titleCase'
 
 function Home({ serializedRecords }: Props) {
   const [records] = useState(serializedRecords)
@@ -35,9 +36,13 @@ function Home({ serializedRecords }: Props) {
                 return (
                   <Link key={JSON.stringify(record._id)} href='/detail/:interview_type/:client_id' as={`/detail/${interview_type}/${record._id}`} passHref>
                     <div className={styles.card}>
-                      <h2>{client_first_name}</h2>
-                      <h2>{client_last_name}</h2>
-                      <h3>{interview_type.toUpperCase()}</h3>
+                      <h2>{toTitleCase(client_first_name)}</h2>
+                      <h2>{toTitleCase(client_last_name)}</h2>
+                      <h3>{interview_type === 'intake' ?
+                        'Intake'
+                        : interview_type === 'discharge' ?
+                          'Discharge'
+                          : interview_type + ' Month'}</h3>
                       <h3>{formattedDate}</h3>
                     </div>
                   </Link>
@@ -60,7 +65,7 @@ function Home({ serializedRecords }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const { client, db } = await connectToDatabase()
+    const { db } = await connectToDatabase()
     const projection = { _id: 1, client_information: 1, interview_info: 1 }
     const collections = ['intake', '6month', '12month', '18month', 'youth_intake', 'youth_6month', 'youth_12month', 'youth_18month']
     const unenteredRecords = [];
@@ -68,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       const collectionRecords = await db.collection(collections[item]).find({
         spars_entry: false
       }).project(projection).toArray()
-      if (collectionRecords.length > 0){
+      if (collectionRecords.length > 0) {
         unenteredRecords.push(...collectionRecords)
       }
     }

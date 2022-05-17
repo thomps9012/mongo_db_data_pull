@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Props } from '../util/Props'
 import { GetServerSideProps } from 'next'
 import React from 'react'
+import toTitleCase from '../util/titleCase'
 
 function GiftCard({ serializedCards }: Props) {
     const [cardRecords] = useState(serializedCards);
@@ -35,9 +36,13 @@ function GiftCard({ serializedCards }: Props) {
                                 return (
                                     <Link key={JSON.stringify(record._id)} href='/carddetail/:interview_type/:client_id' as={`/carddetail/${interview_type}/${record._id}`} passHref>
                                         <div className={styles.card}>
-                                            <h2>{client_first_name}</h2>
-                                            <h2>{client_last_name}</h2>
-                                            <h3>{interview_type.toUpperCase()}</h3>
+                                            <h2>{toTitleCase(client_first_name)}</h2>
+                                            <h2>{toTitleCase(client_last_name)}</h2>
+                                            <h3>{interview_type === 'intake' ?
+                                                'Intake'
+                                                : interview_type === 'discharge' ?
+                                                    'Discharge'
+                                                    : interview_type + ' Month'}</h3>
                                             <h3>{formattedDate}</h3>
                                         </div>
                                     </Link>
@@ -60,11 +65,11 @@ function GiftCard({ serializedCards }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
-        const { client, db} = await connectToDatabase();
+        const { db } = await connectToDatabase();
         const collections = ['intake', '6month', '12month', '18month', 'youth_intake', 'youth_6month', 'youth_12month', 'youth_18month']
         const unreceivedCards = [];
         for (const item in collections) {
-            const collectionCards = await db.collection(collections[item]+'_giftcards').find({
+            const collectionCards = await db.collection(collections[item] + '_giftcards').find({
                 gift_card_received: false
             }).toArray()
             if (collectionCards.length > 0) {

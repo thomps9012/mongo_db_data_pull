@@ -5,6 +5,7 @@ import { ObjectId } from "mongodb";
 import styles from '../../../styles/Home.module.css';
 import Head from 'next/head';
 import React, { useState } from 'react';
+import toTitleCase from "../../../util/titleCase";
 
 export type Props = {
     serializedRecord: typeof clientCardInterface;
@@ -45,15 +46,19 @@ function ClientCardDetail({ serializedRecord }: Props) {
                     <div className={styles.form}>
                         <h2>Gift Card Details for:
                         </h2>
+                        <h1>
+                            {toTitleCase(client_first_name)}
+                        </h1>
+                        <h1>
+                            {toTitleCase(client_last_name)}
+                        </h1>
                         <h2>
-                            {client_first_name}
+                            {interview_type === 'intake' ?
+                                'Intake'
+                                : interview_type === 'discharge' ?
+                                    'Discharge'
+                                    : interview_type + ' Month'}
                         </h2>
-                        <h2>
-                            {client_last_name}
-                        </h2>
-                        <h3>
-                            {interview_type.toString().toUpperCase()}
-                        </h3>
                     </div>
                     <div className={styles.form}>
                         <h2>Gift Card Type</h2>
@@ -78,11 +83,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     console.log(params)
     let client_id = JSON.stringify(params?.client_id);
     let interview_type = params?.interview_type;
-    const { client, db} = await connectToDatabase();
+    const { db } = await connectToDatabase();
     const possibleColls = [interview_type, `youth_${interview_type}`];
     let recordDetail;
     for (const collection in possibleColls) {
-        const clientCardDetail = await client.db.collection(possibleColls[collection]+'_giftcards').findOne({
+        const clientCardDetail = await db.collection(possibleColls[collection] + '_giftcards').findOne({
             _id: new ObjectId(JSON.parse(client_id))
         })
         if (clientCardDetail != null) {
