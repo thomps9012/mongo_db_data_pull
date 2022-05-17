@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import toTitleCase from "../../../util/titleCase";
 import { Props } from "../../../util/Props";
 
-function ClientCardDetail({serializedCard}: Props) {
+function ClientCardDetail({ serializedCard }: Props) {
     const recordId = serializedCard._id
     const { interview_type } = serializedCard;
     const { client_first_name, client_last_name } = serializedCard.client_info;
@@ -79,18 +79,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     let client_id = JSON.stringify(params?.client_id);
     let interview_type = params?.interview_type;
     const { db } = await connectToDatabase();
-    if (interview_type !== 'intake' && interview_type !== 'discharge') {
-        interview_type = interview_type+'month';
+    if (interview_type !== 'intake' && interview_type !== 'discharge' && interview_type != 'youth_intake' && interview_type != 'youth_discharge') {
+        interview_type = interview_type + 'month';
     }
-    const possibleColls = [interview_type, `youth_${interview_type}`];
     let recordDetail;
-    for (const collection in possibleColls) {
-        const clientCardDetail = await db.collection(possibleColls[collection] + '_giftcards').findOne({
-            _id: new ObjectId(JSON.parse(client_id))
-        })
-        if (clientCardDetail != null) {
-            recordDetail = clientCardDetail;
-        }
+    const clientCardDetail = await db.collection(interview_type + '_giftcards').findOne({
+        _id: new ObjectId(JSON.parse(client_id))
+    })
+    if (clientCardDetail != null) {
+        recordDetail = clientCardDetail;
     }
     let serializedCard = JSON.parse(JSON.stringify(recordDetail));
     return {
