@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     let client_id = JSON.stringify(params?.client_id);
     let interview_type = params?.interview_type;
     const { db } = await connectToDatabase();
-    if (interview_type !== 'intake' && interview_type !== 'discharge' && interview_type != 'youth_intake' && interview_type != 'youth_discharge') {
+    if (interview_type !== 'intake' && interview_type !== 'discharge' && !/youth_\w+/g.test(JSON.stringify(interview_type))){
         interview_type = interview_type + 'month';
     }
     let recordDetail;
