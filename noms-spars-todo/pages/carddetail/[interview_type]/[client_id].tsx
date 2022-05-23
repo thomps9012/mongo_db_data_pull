@@ -60,7 +60,7 @@ function ClientCardDetail({ serializedCard }: Props) {
                     </div>
                     <div className={styles.form}>
                         <h2>Gift Card Type</h2>
-                        <input type='text' className={styles.input} onChange={(e) => setCardType(e.target.value)} />
+                        <input type='text' className={styles.input} onChange={(e) => setCardType(toTitleCase(e.target.value.trim()))} />
                         <h2>Gift Card Amount</h2>
                         <input type='number' className={styles.input} onChange={(e) => setCardAmt(JSON.parse(e.target.value))} />
                         <div className={styles.margin} />
