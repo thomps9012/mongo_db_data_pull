@@ -4,8 +4,11 @@ import { connectToDatabase } from "../../util/mongodb";
 export default async function handler(req: { body: any }, res: { json: (arg0: any) => void; }) {
     const { client, db} = await connectToDatabase();
     let data = JSON.parse(req.body)
-    const { nora, card_type, card_amt, recordId, interviewtype } = data;
-    const possibleColls = [interviewtype, `youth_${interviewtype}`];
+    let { nora, card_type, card_amt, recordId, interview_type } = data;
+    if (interview_type !== 'intake' && interview_type !== 'discharge' && !/youth_\w+/g.test(JSON.stringify(interview_type))) {
+        interview_type = interview_type + 'month';
+    }
+    const possibleColls = [interview_type, `youth_${interview_type}`];
     for (const collection in possibleColls) {
         const response = await db.collection(possibleColls[collection]+'_giftcards').updateOne(
             { _id: new ObjectId(recordId) },
