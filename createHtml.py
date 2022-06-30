@@ -1,5 +1,4 @@
 import json
-import pprint
 
 class createHtmlList:
     def createOpenList(open_filtered):
