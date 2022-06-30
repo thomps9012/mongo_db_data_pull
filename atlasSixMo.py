@@ -1,5 +1,3 @@
-from asyncio.windows_events import NULL
-import os
 import datetime
 from pprint import pprint
 from pymongo import MongoClient
@@ -19,7 +17,6 @@ print('close window: ', close_alert.isoformat())
 
 class GetInterviews:
     def getOpenWindows():
-        # six month interview open and close
         six_month_open = intake.find({
             'interview_info.interviewDate': {'$gte': close_alert.isoformat()},
             'interview_info.interviewDate': {'$lt': open_window.isoformat()},
@@ -34,38 +31,12 @@ class GetInterviews:
         for item in six_month_close:
             pprint(item.get('_id').__str__())
         return six_month_open, six_month_close
-
-    # def getYouthOpenWindows():
-    #     # six month interview open and close
-    #     youth_six_month_open = youth_intake.find({
-    #         'interview_info.interviewDate': {'$gte': close_alert.isoformat()},
-    #         'interview_info.interviewDate': {'$lt': open_window.isoformat()},
-    #     }, {'client_information': 1, 'spars_entry': 1})
-    #     print('youth six month open:')
-    #     for doc in youth_six_month_open:
-    #         pprint(doc.get('_id').__str__())
-    #     youth_six_month_close = youth_intake.find({
-    #         'interview_info.interviewDate': {'$lt': close_alert.isoformat()}
-    #         }, {'client_information': 1, 'spars_entry': 1})
-    #     print('youth six month close:')
-    #     for item in youth_six_month_close:
-    #         pprint(item.get('_id').__str__())
-    #     return youth_six_month_open, youth_six_month_close
-
-
     def getSixMonthComplete():
         six_month_complete = six_month.find({'spars_entry': True}, {'_id': 1})
         print('six month complete:')
         for item in six_month_complete:
             pprint(item)
         return six_month_complete
-
-    # def getYouthSixMonthComplete():
-    #     youth_six_month_complete = youth_six_month.find({'spars_entry': True}, {'client_information': 1, 'spars_entry': 1})
-    #     print('youth six month complete:')
-    #     for item in youth_six_month_complete:
-    #         pprint(item.get('_id').__str__())
-    #     return youth_six_month_complete
 
 class FilterInterviews:
     def filterSixMonth():
@@ -92,12 +63,43 @@ class FilterInterviews:
         for item in six_month_close_filtered:
             pprint(item.get('_id').__str__())
         return six_month_close_filtered, six_month_open_filtered
+        
+class createHtmlList:
+    def createOpenList(six_month_open_filtered):
+        open_list = '<ul>'
+        for item in six_month_open_filtered:
+            open_list += '<li>' + item.get('client_information').__str__() + '</li>'
+        open_list += '</ul>'
+        print('open list:')
+        pprint(open_list)
+        return open_list
+    def createCloseList(six_month_close_filtered):
+        close_list = '<ul>'
+        for item in six_month_close_filtered:
+            close_list += '<li>' + item.get('client_information').__str__() + '</li>'
+        close_list += '</ul>'
+        print('close list:')
+        pprint(close_list)
+        return close_list
+    
 
-# getOpenWindows()
-# getSixMonthComplete()
-FilterInterviews.filterSixMonth()
 
-
+six_month_close_filtered, six_month_open_filtered = FilterInterviews.filterSixMonth()
+createHtmlList.createOpenList(six_month_open_filtered)
+createHtmlList.createCloseList(six_month_close_filtered)
+#     def createClientList(client_list):
+#         client_list_html = '<ul>'
+#         for item in client_list:
+#             client_list_html += '<li>' + item.get('_id').__str__() + '</li>'
+#         client_list_html += '</ul>'
+#         return client_list_html
+    
+#     def createContactList(contact_list):
+#         contact_list_html = '<ul>'
+#         for item in contact_list:
+#             contact_list_html += '<li>' + item.get('_id').__str__() + '</li>'
+#         contact_list_html += '</ul>'
+#         return contact_list_html
 
 
 # def createSixMonth(six_month_open, six_month_close):
