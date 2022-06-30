@@ -1,8 +1,11 @@
 import datetime
-import json
+import sys
+sys.path.append("")
 from pprint import pprint
 from pymongo import MongoClient
 from datetime import timedelta
+
+from createHtml import createHtml, createHtmlList
 
 dbclient = MongoClient('mongodb+srv://spars01:H0YXCAGHoUihHcSZ@cluster0.wuezj.mongodb.net/noms-interviews?retryWrites=true&w=majority')
 db = dbclient.get_database('noms-interviews')
@@ -63,43 +66,44 @@ class FilterInterviews:
             pprint(item.get('_id').__str__())
         return six_month_close_filtered, six_month_open_filtered
         
-class createHtmlList:
-    def createOpenList(six_month_open_filtered):
-        open_list = '<ul style="list-style: none; margin:10; padding:10">'
-        for item in six_month_open_filtered:
-            client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(',', ':')).replace('\n', '<br>').replace('"', ' ')
-            open_list += '<li style="display:inline-block; padding: 10px; margin: 10px; border-radius: 10;"><pre>'+ client_info + '</pre></li>'
-        open_list += '</ul>'
-        pprint(open_list)
-        return open_list
-    def createCloseList(six_month_close_filtered):
-        close_list = '<ul style="list-style: none; margin:10; padding:10">'
-        for item in six_month_close_filtered:
-            client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(', ', ':')).replace('\n', '<br>').replace('"', ' ')
-            close_list += '<li style="display:inline-block; padding: 5px; margin: 5px; border-radius: 10;"><pre>'+ client_info + '</pre></li>'
-        close_list += '</ul>'
-        pprint(close_list)
-        return close_list
+# class createHtmlList:
+#     def createOpenList(six_month_open_filtered):
+#         open_list = '<ul style="list-style: none; margin:10; padding:10">'
+#         for item in six_month_open_filtered:
+#             client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(',', ':')).replace('\n', '<br>').replace('"', ' ')
+#             open_list += '<li style="display:inline-block; padding: 10px; margin: 10px; border-radius: 10;"><pre>'+ client_info + '</pre></li>'
+#         open_list += '</ul>'
+#         pprint(open_list)
+#         return open_list
+#     def createCloseList(six_month_close_filtered):
+#         close_list = '<ul style="list-style: none; margin:10; padding:10">'
+#         for item in six_month_close_filtered:
+#             client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(', ', ':')).replace('\n', '<br>').replace('"', ' ')
+#             close_list += '<li style="display:inline-block; padding: 5px; margin: 5px; border-radius: 10;"><pre>'+ client_info + '</pre></li>'
+#         close_list += '</ul>'
+#         pprint(close_list)
+#         return close_list
 
 six_month_close_filtered, six_month_open_filtered = FilterInterviews.filterSixMonth()
 
-class createHtml:
-    def createHtml(open_list, close_list):
-        html = '<!DOCTYPE html><html lang=en>'
-        html += '<head>'
-        html += '<title>Six Month Followups</title>'
-        html += '<meta charset="utf-8">'
-        html += '<meta name="viewport" content="width=device-width, initial-scale=1">'
-        html += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">'
-        html += '</head>'
-        html += '<body>'
-        html += '<h1 style="text-align:center">Six Month Followups</h1>'
-        html += '<h2 style="text-align:center">Open</h2>'
-        html += open_list
-        html += '<h2 style="text-align:center">Closing</h2>'
-        html += close_list
-        html += '</body>'
-        return html
+# class createHtml:
+#     def createHtml(open_list, close_list):
+#         html = '<!DOCTYPE html><html lang=en>'
+#         html += '<head>'
+#         html += '<title>Six Month Followups</title>'
+#         html += '<meta charset="utf-8">'
+#         html += '<meta name="viewport" content="width=device-width, initial-scale=1">'
+#         html += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">'
+#         html += '</head>'
+#         html += '<body>'
+#         html += '<h1 style="text-align:center">Six Month Followups</h1>'
+#         html += '<h2 style="text-align:center">Open</h2>'
+#         html += open_list
+#         html += '<h2 style="text-align:center">Closing</h2>'
+#         html += close_list
+#         html += '</body>'
+#         return html
+
 
 open_list = createHtmlList.createOpenList(six_month_open_filtered)
 close_list = createHtmlList.createCloseList(six_month_close_filtered)
