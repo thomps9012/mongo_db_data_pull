@@ -1,4 +1,7 @@
 import datetime
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import json
 from pprint import pprint
 from pymongo import MongoClient
 from datetime import timedelta
@@ -66,105 +69,51 @@ class FilterInterviews:
         
 class createHtmlList:
     def createOpenList(six_month_open_filtered):
-        open_list = '<ul>'
+        open_list = '<ul style="list-style-tuple: none; margin:10; padding:10">'
         for item in six_month_open_filtered:
-            open_list += '<li>' + item.get('client_information').__str__() + '</li>'
+            client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(',', ':')).replace('\n', '<br>').replace('"', ' ')
+            open_list += '<li style="display:inline-block; padding: 10px; margin: 10px; border-radius: 10; border:1px solid; border-color: #dedede"><pre>'+ client_info + '</pre></li>'
         open_list += '</ul>'
-        print('open list:')
         pprint(open_list)
         return open_list
     def createCloseList(six_month_close_filtered):
-        close_list = '<ul>'
+        close_list = '<ul style="list-style-tuple: none; margin:10; padding:10">'
         for item in six_month_close_filtered:
-            close_list += '<li>' + item.get('client_information').__str__() + '</li>'
+            client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(', ', ':')).replace('\n', '<br>').replace('"', ' ')
+            close_list += '<li style="display:inline-block; padding: 5px; margin: 5px; border-radius: 10; border:1px solid; border-color: #dedede"><pre>'+ client_info + '</pre></li>'
         close_list += '</ul>'
-        print('close list:')
         pprint(close_list)
         return close_list
-    
-
 
 six_month_close_filtered, six_month_open_filtered = FilterInterviews.filterSixMonth()
-createHtmlList.createOpenList(six_month_open_filtered)
-createHtmlList.createCloseList(six_month_close_filtered)
-#     def createClientList(client_list):
-#         client_list_html = '<ul>'
-#         for item in client_list:
-#             client_list_html += '<li>' + item.get('_id').__str__() + '</li>'
-#         client_list_html += '</ul>'
-#         return client_list_html
-    
-#     def createContactList(contact_list):
-#         contact_list_html = '<ul>'
-#         for item in contact_list:
-#             contact_list_html += '<li>' + item.get('_id').__str__() + '</li>'
-#         contact_list_html += '</ul>'
-#         return contact_list_html
+
+class createHtml:
+    def createHtml(open_list, close_list):
+        html = '<!DOCTYPE html><html lang=en>'
+        html += '<head>'
+        html += '<title>Six Month Followups</title>'
+        html += '</head>'
+        html += '<body>'
+        html += '<h1 style="text-align:center">Six Month Followups</h1>'
+        html += '<h2 style="text-align:center">Open</h2>'
+        html += open_list
+        html += '<h2 style="text-align:center">Closing</h2>'
+        html += close_list
+        html += '</body>'
+        return html
+
+open_list = createHtmlList.createOpenList(six_month_open_filtered)
+close_list = createHtmlList.createCloseList(six_month_close_filtered)
+html = createHtml.createHtml(open_list, close_list)
+print('html:')
+print(html)
+
+# def createEmail(html):
+#     msg = MIMEMultipart()
+#     msg['From'] = '<from email>'
+#     msg['To'] = '<to email>'
+#     msg['Subject'] = 'Six Month Followups'
+#     msg.attach(MIMEText(html, 'html'))
+#     return msg
 
 
-# def createSixMonth(six_month_open, six_month_close):
-#     for item in six_month_open:
-
-
-
-# six month open
-# six_month_int = six_month.find({},{'client_information': 1, 'spars_entry': 1, 'interview_info': 1})
-# complete_six_int_names = []
-# for item in six_month_int:
-#     complete_client = item['client_information']
-#     complete_client_info = complete_client['client_info']
-#     complete_six_int_names.append({complete_client_info['client_first_name'].lower().strip(), complete_client_info['client_last_name'].lower().strip()})
-# for item in complete_six_int_names:
-#     print(item)
-# six_month_open_html = '<ol>'
-# # six month open
-# for doc in six_month_open:
-#     # print('hit')
-#     client = doc['client_information']
-#     # pprint(client)
-#     client_info = client.get('client_info')
-#     contact_info = client.get('emergency_contact')
-#     if({client_info.get('client_last_name').lower().strip(), client_info.get('client_first_name').lower().strip()}) not in complete_six_int_names:
-#         # pprint(item.get('_id'))
-#         open_client_li = '<ul>'
-#         open_contact_li = '<ul>'
-
-#         for item in client_info:
-#             if client_info[item] != '' or client_info[item] != NULL:
-#                 open_client_li+='<li>'+(client_info[item])+'</li>'
-#         for item in contact_info:
-#             print('item hit')
-#             print(contact_info[item])
-#             if contact_info[item] != '':
-#                 open_contact_li+='<li>'+(contact_info[item])+'</li>'
-
-#         open_client_li = open_client_li+'</ul>'
-#         open_contact_li = open_contact_li+'</ul>'
-#         six_month_open_html += '<li> Client:'+open_client_li+'<br /> Emergency Contact:'+open_contact_li+'</li>'
-# six_month_open_html += '</ol>'
-# # six month close
-# six_month_close_html = '<ol>'
-# for item in six_month_close:
-#     close_client = item['client_information']
-#     close_client_info = close_client['client_info']
-#     close_contact_info = close_client['emergency_contact']
-#     if({close_client_info['client_last_name'].lower().strip(), close_client_info['client_first_name'].lower().strip()}) not in complete_six_int_names:
-#         close_client_li = '<ul>'
-#         close_contact_li = '<ul>'
-   
-#         for item in close_client_info:
-#             print('item hit')
-#             print(close_client_info[item])
-#             if close_client_info[item] != '' or close_client_info[item] != NULL:
-#                 close_client_li+='<li>'+(close_client_info[item])+'</li>'
-#         for item in close_contact_info:
-#             if close_contact_info[item] != '' or close_contact_info[item] != NULL:
-#                 close_contact_li+='<li>'+(close_contact_info[item])+'</li>'
-    
-#         close_client_li = close_client_li+'</ul>'
-#         close_contact_li = close_contact_li+'</ul>'
-#         six_month_close_html += '<li> Client Information:'+close_client_li+'<br /> Emergency Contact:'+close_contact_li+'</li>'
-
-# six_month_close_html += '</ol>'
-
-# pprint(six_month_open_html)
