@@ -1,6 +1,4 @@
 import datetime
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 import json
 from pprint import pprint
 from pymongo import MongoClient
@@ -9,9 +7,7 @@ from datetime import timedelta
 dbclient = MongoClient('mongodb+srv://spars01:H0YXCAGHoUihHcSZ@cluster0.wuezj.mongodb.net/noms-interviews?retryWrites=true&w=majority')
 db = dbclient.get_database('noms-interviews')
 intake = db.get_collection('intake')
-youth_intake = db.get_collection('youth_intake')
 six_month = db.get_collection('6month')
-youth_six_month = db.get_collection('youth_6month')
 
 open_window = datetime.datetime.utcnow() + timedelta(weeks=-22)
 print('open window: ', open_window.isoformat())
@@ -107,13 +103,3 @@ close_list = createHtmlList.createCloseList(six_month_close_filtered)
 html = createHtml.createHtml(open_list, close_list)
 print('html:')
 print(html)
-
-# def createEmail(html):
-#     msg = MIMEMultipart()
-#     msg['From'] = '<from email>'
-#     msg['To'] = '<to email>'
-#     msg['Subject'] = 'Six Month Followups'
-#     msg.attach(MIMEText(html, 'html'))
-#     return msg
-
-
