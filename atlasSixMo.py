@@ -65,18 +65,18 @@ class FilterInterviews:
         
 class createHtmlList:
     def createOpenList(six_month_open_filtered):
-        open_list = '<ul style="list-style-tuple: none; margin:10; padding:10">'
+        open_list = '<ul style="list-style: none; margin:10; padding:10">'
         for item in six_month_open_filtered:
             client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(',', ':')).replace('\n', '<br>').replace('"', ' ')
-            open_list += '<li style="display:inline-block; padding: 10px; margin: 10px; border-radius: 10; border:1px solid; border-color: #dedede"><pre>'+ client_info + '</pre></li>'
+            open_list += '<li style="display:inline-block; padding: 10px; margin: 10px; border-radius: 10;"><pre>'+ client_info + '</pre></li>'
         open_list += '</ul>'
         pprint(open_list)
         return open_list
     def createCloseList(six_month_close_filtered):
-        close_list = '<ul style="list-style-tuple: none; margin:10; padding:10">'
+        close_list = '<ul style="list-style: none; margin:10; padding:10">'
         for item in six_month_close_filtered:
             client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(', ', ':')).replace('\n', '<br>').replace('"', ' ')
-            close_list += '<li style="display:inline-block; padding: 5px; margin: 5px; border-radius: 10; border:1px solid; border-color: #dedede"><pre>'+ client_info + '</pre></li>'
+            close_list += '<li style="display:inline-block; padding: 5px; margin: 5px; border-radius: 10;"><pre>'+ client_info + '</pre></li>'
         close_list += '</ul>'
         pprint(close_list)
         return close_list
@@ -88,6 +88,9 @@ class createHtml:
         html = '<!DOCTYPE html><html lang=en>'
         html += '<head>'
         html += '<title>Six Month Followups</title>'
+        html += '<meta charset="utf-8">'
+        html += '<meta name="viewport" content="width=device-width, initial-scale=1">'
+        html += '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">'
         html += '</head>'
         html += '<body>'
         html += '<h1 style="text-align:center">Six Month Followups</h1>'
@@ -101,5 +104,5 @@ class createHtml:
 open_list = createHtmlList.createOpenList(six_month_open_filtered)
 close_list = createHtmlList.createCloseList(six_month_close_filtered)
 html = createHtml.createHtml(open_list, close_list)
-print('html:')
-print(html)
+f = open('six_month_followups.html', 'w')
+f.write(html)
