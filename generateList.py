@@ -2,8 +2,8 @@ import os
 import datetime
 from pymongo import MongoClient
 
-dbclient = MongoClient(os.getenv('ATLAS_URI'))
-db = dbclient.get_database['noms-interviews']
+dbclient = MongoClient('mongodb+srv://spars01:H0YXCAGHoUihHcSZ@cluster0.wuezj.mongodb.net/noms-interviews?retryWrites=true&w=majority')
+db = dbclient.get_database('noms-interviews')
 
 intake = db.get_collection('intake')
 six_month = db.get_collection('6month')
