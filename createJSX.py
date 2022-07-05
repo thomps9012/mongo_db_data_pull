@@ -1,6 +1,6 @@
 import json
 
-class createHtmlList:
+class createAccordion:
     def createOpenList(open_filtered):
         open_list = '<Accordion defaultActiveKey="0"> \n'
         i = 0
@@ -38,8 +38,8 @@ class createHtmlList:
         # pprint(close_list)
         return close_list
 
-class createHtml:
-    def createHtml(open_list, close_list, title, stringTitle):
+class createJSX:
+    def createJSX(open_list, close_list, title, stringTitle):
         html = 'import { Accordion } from "react-bootstrap" \n'
         html += 'export default function '+ title+'() { \n'
         html += 'return ( \n'
