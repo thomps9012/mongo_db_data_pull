@@ -8,6 +8,6 @@ six_month_open_filtered, six_month_close_filtered = FilterInterviews.filter(open
 
 open_list = createHtmlList.createOpenList(six_month_open_filtered)
 close_list = createHtmlList.createCloseList(six_month_close_filtered)
-html = createHtml.createHtml(open_list, close_list)
-f = open('6month_followups.html', 'w')
+html = createHtml.createHtml(open_list, close_list, 'sixMonth', '6 Month Followups')
+f = open('sixMonth.js', 'w')
 f.write(html)
