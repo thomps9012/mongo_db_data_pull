@@ -2,33 +2,54 @@ import json
 
 class createHtmlList:
     def createOpenList(open_filtered):
-        open_list = '<ul style={{listStyle: "none", margin:10, padding:10}}>'
+        open_list = '<Accordion defaultActiveKey="0"> \n'
+        i = 0
         for item in open_filtered:
+            i += 1
             client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(',', ':')).replace('"', ' ')
-            open_list += '<li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`'+ client_info + '`}</pre></li>'
-        open_list += '</ul>'
+            open_list += '''
+            <Accordion.Item eventKey="'''+i.__str__()+'''">
+                <Accordion.Header>
+                    '''+item.get('client_information').get('client_info').get('client_first_name').__str__()+''' '''+item.get('client_information').get('client_info').get('client_last_name').__str__()+'''
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`'''+client_info+'''`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> \n'''
+        open_list += '</Accordion>'
         # pprint(open_list)
         return open_list
     def createCloseList(close_filtered):
-        close_list = '<ul style={{listStyle: "none", margin:10, padding:10}}>'
+        close_list = '<Accordion defaultActiveKey="0"> \n'
+        i = 0
         for item in close_filtered:
+            i += 1
             client_info = json.dumps(item.get('client_information'), indent=4, sort_keys=True, skipkeys=True, default=str, separators=(',', ':')).replace('"', ' ')
-            close_list +=  '<li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`'+ client_info + '`}</pre></li>'
-        close_list += '</ul>'
+            close_list +=  '''
+            <Accordion.Item eventKey="'''+i.__str__()+'''">
+                <Accordion.Header>
+                    '''+item.get('client_information').get('client_info').get('client_first_name').__str__()+''' '''+item.get('client_information').get('client_info').get('client_last_name').__str__()+'''
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`'''+client_info+'''`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> \n'''
+        close_list += '</Accordion>'
         # pprint(close_list)
         return close_list
 
 class createHtml:
     def createHtml(open_list, close_list, title, stringTitle):
-        html = 'export default function '+ title+'() {'
-        html += 'return ('
-        html += '<>'
-        html += '<h1 style={{textAlign: "center"}}>'+stringTitle+'</h1>'
-        html += '<h2 style={{textAlign: "center"}}>Open</h2>'
+        html = 'import { Accordion } from "react-bootstrap" \n'
+        html += 'export default function '+ title+'() { \n'
+        html += 'return ( \n'
+        html += '<> \n'
+        html += '<h1 style={{textAlign: "center"}}>'+stringTitle+'</h1> \n'
+        html += '<h2 style={{textAlign: "center"}}>Open</h2> \n'
         html += open_list
-        html += '<h2 style={{textAlign: "center"}}>Closing</h2>'
+        html += '<h2 style={{textAlign: "center"}}>Closing</h2> \n'
         html += close_list
-        html += '</>'
-        html += ')'
-        html += '}'
+        html += '</> \n'
+        html += ') \n'
+        html += '} \n'
         return html

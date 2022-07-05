@@ -1,4 +1,17 @@
-export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>6 Month Followups</h1><h2 style={{textAlign: "center"}}>Open</h2><ul style={{listStyle: "none", margin:10, padding:10}}><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+import { Accordion } from "react-bootstrap" 
+export default function sixMonth() { 
+return ( 
+<> 
+<h1 style={{textAlign: "center"}}>6 Month Followups</h1> 
+<h2 style={{textAlign: "center"}}>Open</h2> 
+<Accordion defaultActiveKey="0"> 
+
+            <Accordion.Item eventKey="1">
+                <Accordion.Header>
+                    Ryan Richards
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address :  ,
@@ -19,7 +32,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 1400 E. 55th Street ,
          contact_zip : 44103 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="2">
+                <Accordion.Header>
+                    Brittany Podlogar
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : podlogarbrittany@gmail.com ,
@@ -40,7 +62,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street :  ,
          contact_zip :  
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="3">
+                <Accordion.Header>
+                    Calvin Ramsey
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address :  ,
@@ -61,7 +92,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 1400 E. 55th Street ,
          contact_zip : 44103 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="4">
+                <Accordion.Header>
+                    Shatara Evans
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : khyleahmum@gmail.com ,
@@ -82,7 +122,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street :  ,
          contact_zip : 44103 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="5">
+                <Accordion.Header>
+                    Patricia Means
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : Meanspatricia0@gmail.com ,
@@ -103,7 +152,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 7780 Woodland Ave, Apt C12 ,
          contact_zip : 44104 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="6">
+                <Accordion.Header>
+                    Khalid Alrawashdeh
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : khaledalrawashdeh70@gmail.com ,
@@ -124,7 +182,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 1115 Canyon View Rd, Apt 603 ,
          contact_zip : 44067 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="7">
+                <Accordion.Header>
+                    Eric Taylor
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : michael_lee456@yahoo.com ,
@@ -145,7 +212,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 13409 Blenheim Rd. ,
          contact_zip : 44110 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="8">
+                <Accordion.Header>
+                    Lauren Vukovic
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Painsville ,
          client_email_address : laurenvukovic216@gmail.com ,
@@ -166,7 +242,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street :  ,
          contact_zip : 44122 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="9">
+                <Accordion.Header>
+                    Derek Wolfe
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Strongsville ,
          client_email_address : wolfederekr@gmail.com ,
@@ -187,7 +272,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 1331 Sheridan Dr. ,
          contact_zip : 44134 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="10">
+                <Accordion.Header>
+                    David Chapo
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : chapodavid85@gmail.com ,
@@ -208,7 +302,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street :  ,
          contact_zip :  
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="11">
+                <Accordion.Header>
+                    Earls Matatws
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address :  ,
@@ -229,7 +332,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street :  ,
          contact_zip :  
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="12">
+                <Accordion.Header>
+                    Davon Norflet
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : norflet24@gmail.com ,
@@ -250,7 +362,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 794 Archer Rd. ,
          contact_zip : 44146 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="13">
+                <Accordion.Header>
+                    Jasmin Black
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : Jazzquen27@gmail.com ,
@@ -271,7 +392,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 3955 Euclid Avenue ,
          contact_zip : 44115 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="14">
+                <Accordion.Header>
+                    Tania Harper
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : taniaharper90@yahoo.com ,
@@ -292,7 +422,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 687 East 93rd ,
          contact_zip : 44108 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="15">
+                <Accordion.Header>
+                    Anthony Culovic
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Lakewood ,
          client_email_address : anthonyc5112@gmail.com ,
@@ -313,7 +452,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 54 Broadmore ,
          contact_zip : 44146 
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="16">
+                <Accordion.Header>
+                    Desie Westerfeld
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : desiewesterfeld4@gmail.com ,
@@ -334,7 +482,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street :  ,
          contact_zip :  
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="17">
+                <Accordion.Header>
+                    Detra Cook
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address : detracook56@gmail.com ,
@@ -355,7 +512,16 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street :  ,
          contact_zip :  
     }
-}`}</pre></li><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+
+            <Accordion.Item eventKey="18">
+                <Accordion.Header>
+                    Hollie Robinson
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Garfield heights ,
          client_email_address : buckagray88@gmail.com ,
@@ -376,7 +542,18 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 9612 s.highland Ave ,
          contact_zip : 44125 
     }
-}`}</pre></li></ul><h2 style={{textAlign: "center"}}>Closing</h2><ul style={{listStyle: "none", margin:10, padding:10}}><li style={{display: "inline-block", padding: 10, margin: 10, borderRadius: 10}}><pre>{`{
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+</Accordion><h2 style={{textAlign: "center"}}>Closing</h2> 
+<Accordion defaultActiveKey="0"> 
+
+            <Accordion.Item eventKey="1">
+                <Accordion.Header>
+                    Ryan Richards
+                </Accordion.Header>
+                <Accordion.Body>
+                        <pre>{`{
      client_info :{
          client_city : Cleveland ,
          client_email_address :  ,
@@ -397,4 +574,9 @@ export default function sixMonth() {return (<><h1 style={{textAlign: "center"}}>
          contact_street : 1400 E. 55th Street ,
          contact_zip : 44103 
     }
-}`}</pre></li></ul></>)}
+}`}</pre>
+                </Accordion.Body>
+            </Accordion.Item> 
+</Accordion></> 
+) 
+} 
